@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お茶処 MENU</title>
+    <style>
+        /* (スタイルは前回と同じなので省略) */
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Sans','Noto Sans CJK JP',sans-serif;background-color:#fdfbf6;color:#333;margin:0;padding:15px;text-align:center}.container{max-width:600px;margin:0 auto;background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,.05);padding:20px}#customer-view{padding:10px}#menu-image{max-width:100%;height:auto;border-radius:4px}#credit-footer{margin-top:15px;font-size:.8em;color:#888;cursor:pointer;user-select:none}#staff-view{display:none;text-align:left}#staff-view h1{text-align:center;color:#d9534f;border-bottom:2px solid #d9534f;margin-top:0}.staff-nav{display:flex;margin-bottom:20px}.nav-tab{flex:1;padding:12px 10px;font-size:1.1em;font-weight:700;text-align:center;border:1px solid #ccc;background-color:#f9f9f9;cursor:pointer}.nav-tab.active{background-color:#fff;border-bottom-color:#fff}#order-tab{border-radius:8px 0 0 8px;border-right:none}#log-tab{border-radius:0 8px 8px 0}.staff-page{display:none}.staff-page.active{display:block}.order-item{display:flex;justify-content:space-between;align-items:center;padding:15px 10px;border-bottom:1px solid #eee}.order-item .item-name{font-size:1.1em;font-weight:700}.count-controls{display:flex;align-items:center}.count-controls button{width:40px;height:40px;font-size:1.5em;font-weight:700;border:1px solid #ccc;border-radius:50%;background-color:#f9f9f9;cursor:pointer;line-height:1}.count-controls .count{font-size:1.4em;font-weight:700;width:50px;text-align:center}#total-section{margin-top:30px;text-align:center}#total-price{font-size:2em;font-weight:700;color:#333;margin:15px 0}.order-buttons{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.order-buttons button{flex:1;font-size:1.1em;padding:15px 10px;border:none;border-radius:5px;cursor:pointer;font-weight:700}#reset-button{background-color:#f0ad4e;color:#fff}#confirm-button{background-color:#5cb85c;color:#fff}#log-container{max-height:400px;overflow-y:auto;border:1px solid #eee;border-radius:5px}.log-entry{padding:15px;border-bottom:1px solid #ddd}.log-entry:last-child{border-bottom:none}.log-header{display:flex;justify-content:space-between;font-weight:700;margin-bottom:10px}.log-time{font-size:.9em;color:#555}.log-total{font-size:1.1em;color:#d9534f}.log-items{list-style:none;margin-left:-20px;color:#444;margin-top:8px;padding:0}#staff-footer{margin-top:30px;text-align:center}#back-to-customer{font-size:1em;padding:12px 20px;border:none;border-radius:5px;cursor:pointer;font-weight:700;background-color:#5bc0de;color:#fff}
+    </style>
+</head>
+<body>
+
+    <div id="customer-view" class="container">
+        <header>
+            <img src="https://cdn.discordapp.com/attachments/1027839972293758978/1430230571727978556/IMG_0106.JPG?ex=68f90584&is=68f7b404&hm=bce0aa484d41f3e441c2b61a96dcd1301bb5729fbcc1962461a4d6a380ca3795&" alt="メニュー" id="menu-image">
+        </header>
+        
+        <footer>
+            <p id="credit-footer">"おんちゃ処"_2025D4模擬店</p>
+        </footer>
+    </div>
+
+    <div id="staff-view" class="container">
+        <header>
+            <h1>【店員用】管理パネル</h1>
+        </header>
+
+        <nav class="staff-nav">
+            <div id="order-tab" class="nav-tab active">オーダー</div>
+            <div id="log-tab" class="nav-tab">LOG (履歴)</div>
+        </nav>
+
+        <div id="order-page" class="staff-page active">
+            <main id="order-form"></main>
+            <footer id="total-section">
+                <div id="total-price">合計: ¥0</div>
+                <div class="order-buttons">
+                    <button id="reset-button">リセット</button>
+                    <button id="confirm-button">以上の内容で確定</button>
+                </div>
+            </footer>
+        </div>
+
+        <div id="log-page" class="staff-page">
+            <main id="log-container">
+                <p style="text-align: center; color: #888;">ログを読み込み中です...</p>
+            </main>
+        </div>
+
+        <footer id="staff-footer">
+            <button id="back-to-customer">客側表示に戻る</button>
+        </footer>
+    </div>
+
+
+    <script>
+        // ▼▼▼ ご指定のGASのURLをセットしました ▼▼▼
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxQ2pUukX2ZPSXwa-IABIEqD7d3fFVYCnZQssWFNfkD6UGsPtP3XfTS4N7c7s7P2RFX/exec';
+        
+
+        // --- メニューデータ ---
+        const menuItems = {
+            'onset': ['おんちゃセット', 500],
+            'kinako': ['きな粉', 150],
+            'mitarashi': ['みたらし', 150],
+            'tsubuan': ['つぶあん', 150],
+            'koshian': ['こしあん', 150],
+            'nori': ['のり醤油', 150],
+            'anko_up': ['あんこ増量', 20],
+            'kinako_up': ['きな粉増量', 20],
+            'ryokucha': ['緑茶', 100],
+            'oolong': ['烏龍茶', 100],
+            'water': ['水', 100],
+            'cola': ['コーラ', 100],
+            'soda': ['ソーダ', 100],
+            'ginger': ['ジンジャーエール', 100],
+            'ramune': ['ラムネ', 150]
+        };
+
+        // 注文数を保持するオブジェクト
+        let currentOrder = {};
+
+        // --- DOM要素の取得 ---
+        const customerView = document.getElementById('customer-view');
+        const staffView = document.getElementById('staff-view');
+        const creditFooter = document.getElementById('credit-footer');
+        const orderPage = document.getElementById('order-page');
+        const logPage = document.getElementById('log-page');
+        const orderTab = document.getElementById('order-tab');
+        const logTab = document.getElementById('log-tab');
+        const orderForm = document.getElementById('order-form');
+        const totalPriceEl = document.getElementById('total-price');
+        const logContainer = document.getElementById('log-container');
+        const resetButton = document.getElementById('reset-button');
+        const confirmButton = document.getElementById('confirm-button');
+        const backButton = document.getElementById('back-to-customer');
+
+        // --- オーダーフォームの初期化・リセット ---
+        function initializeOrderForm() {
+            orderForm.innerHTML = ''; 
+            currentOrder = {}; 
+
+            for (const id in menuItems) {
+                currentOrder[id] = 0; 
+                const item = menuItems[id];
+                const name = item[0];
+                
+                const el = document.createElement('div');
+                el.className = 'order-item';
+                el.innerHTML = `
+                    <span class="item-name">${name}</span>
+                    <div class="count-controls">
+                        <button onclick="updateOrder('${id}', -1)">-</button>
+                        <span id="count-${id}" class="count">0</span>
+                        <button onclick="updateOrder('${id}', 1)">+</button>
+                    </div>
+                `;
+                orderForm.appendChild(el);
+            }
+            updateTotal();
+        }
+
+        // --- 注文数の更新 ---
+        window.updateOrder = function(id, change) {
+            const newCount = currentOrder[id] + change;
+            if (newCount >= 0) { 
+                currentOrder[id] = newCount;
+                document.getElementById(`count-${id}`).innerText = newCount;
+                updateTotal();
+            }
+        }
+        
+        // --- 合計金額の計算 ---
+        function calculateTotal() {
+            let total = 0;
+            for (const id in currentOrder) {
+                const price = menuItems[id][1];
+                total += currentOrder[id] * price;
+            }
+            return total;
+        }
+
+        // --- 合計金額の表示更新 ---
+        function updateTotal() {
+            const total = calculateTotal();
+            totalPriceEl.innerText = `合計: ¥${total}`;
+        }
+
+        // --- LOGページの描画 (GASから読み込み) ---
+        async function loadAndRenderLog() {
+            logContainer.innerHTML = '<p style="text-align: center; color: #888;">ログを読み込み中です...</p>';
+            
+            try {
+                // GETリクエストでログを取得
+                const response = await fetch(GAS_WEB_APP_URL);
+                const result = await response.json();
+
+                if (result.status !== 'success') {
+                    throw new Error(result.message || 'ログの読み込みに失敗しました。');
+                }
+
+                const logs = result.data;
+
+                if (logs.length === 0) {
+                    logContainer.innerHTML = '<p style="text-align: center; color: #888;">まだ確定された注文はありません。</p>';
+                    return;
+                }
+                
+                logContainer.innerHTML = ''; // ログコンテナをクリア
+                
+                logs.forEach(log => {
+                    const logEl = document.createElement('div');
+                    logEl.className = 'log-entry';
+                    
+                    logEl.innerHTML = `
+                        <div class="log-header">
+                            <span class="log-time">${log.timestamp}</span>
+                            <span class="log-total">合計: ¥${log.total}</span>
+                        </div>
+                        <ul class="log-items">
+                            <li>${log.itemsSummary.replace(/, /g, '</li><li>')}</li>
+                        </ul>
+                    `;
+                    logContainer.appendChild(logEl);
+                });
+
+            } catch (error) {
+                console.error('Error loading log:', error);
+                logContainer.innerHTML = `<p style="text-align: center; color: red;">エラー: ${error.message} (GASのURL、デプロイ、シート名「LOG」を確認してください)</p>`;
+            }
+        }
+        
+        // --- 秘密の操作（フッターをクリック） ---
+        let clickCount = 0;
+        creditFooter.addEventListener('click', () => {
+            clickCount++;
+            if (clickCount >= 5) {
+                customerView.style.display = 'none';
+                staffView.style.display = 'block';
+                clickCount = 0; 
+                // 店員ビュー表示時にログを読み込む
+                loadAndRenderLog();
+            }
+            setTimeout(() => { clickCount = 0; }, 3000);
+        });
+
+        // --- イベントリスナーの設定 ---
+        
+        // リセットボタン
+        resetButton.addEventListener('click', () => {
+            if (confirm('現在のオーダーをリセットしますか？ (LOGには残りません)')) {
+                initializeOrderForm();
+            }
+        });
+        
+        // 確定ボタン (GASへ送信)
+        confirmButton.addEventListener('click', async () => {
+            const total = calculateTotal();
+            if (total === 0) {
+                alert('商品が選択されていません。');
+                return;
+            }
+            
+            if (!confirm(`合計 ¥${total} で確定し、LOGに記録しますか？`)) {
+                return;
+            }
+
+            // ログに送信するデータを作成
+            let itemsToLog = [];
+            for (const id in currentOrder) {
+                if (currentOrder[id] > 0) {
+                    itemsToLog.push(`${menuItems[id][0]} x ${currentOrder[id]}`);
+                }
+            }
+            
+            // スプレッドシートのB列に入れるための単一の文字列
+            const itemsSummary = itemsToLog.join(', ');
+            
+            // タイムスタンプ
+            const now = new Date();
+            const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+            
+            const dataToPost = {
+                timestamp: timestamp,
+                itemsSummary: itemsSummary,
+                total: total
+            };
+
+            // ボタンを無効化（二重送信防止）
+            confirmButton.disabled = true;
+            confirmButton.innerText = '送信中...';
+
+            try {
+                // POSTリクエストでログを送信
+                const response = await fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // 'no-cors'モード
+                    cache: 'no-cache',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    redirect: 'follow', 
+                    body: JSON.stringify(dataToPost) 
+                });
+                
+                // 'no-cors'モードではレスポンスの中身は確認できないが、
+                // リクエストは送信されていると期待する
+                
+                alert('ログに記録しました！');
+                
+                // オーダーフォームをリセット
+                initializeOrderForm();
+                
+                // LOGタブをアクティブにして更新
+                showTab('log');
+                loadAndRenderLog();
+
+            } catch (error) {
+                console.error('Error posting log:', error);
+                alert(`エラーが発生しました: ${error.message} (スプレッドシートの共有設定が「編集者」になっているか確認してください)`);
+            } finally {
+                // ボタンを有効に戻す
+                confirmButton.disabled = false;
+                confirmButton.innerText = '以上の内容で確定';
+            }
+        });
+
+        // 戻るボタン
+        backButton.addEventListener('click', () => {
+            customerView.style.display = 'block';
+            staffView.style.display = 'none';
+        });
+        
+        // --- タブ切り替え ---
+        function showTab(pageToShow) {
+            if (pageToShow === 'order') {
+                orderPage.classList.add('active');
+                logPage.classList.remove('active');
+                orderTab.classList.add('active');
+                logTab.classList.remove('active');
+            } else {
+                orderPage.classList.remove('active');
+                logPage.classList.add('active');
+                orderTab.classList.remove('active');
+                logTab.classList.add('active');
+            }
+        }
+        
+        orderTab.addEventListener('click', () => showTab('order'));
+        logTab.addEventListener('click', () => {
+            showTab('log');
+            // ログタブがクリックされたら必ず最新のログを読み込む
+            loadAndRenderLog();
+        });
+
+
+        // --- 初期化実行 ---
+        initializeOrderForm();
+
+    </script>
+</body>
+</html>
