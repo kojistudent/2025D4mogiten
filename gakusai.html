@@ -238,7 +238,7 @@
 
     <script>
         // ▼▼▼ 新しいGASのURLに差し替えました ▼▼▼
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyct-4J8iapbm6gn1b4e28NZ5vA-mAoSgCq75EnI8FoE_SjBx8yh_ZxZ0iDk7k5fWwO/exec';
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby6QDOyjkyFTLjlYkjCTxSq5LcsfZaHBqtulxXHnxabLERO1P-pzQQpw9abrZ84DEOI/exec';
         
         // --- 合言葉 ---
         const PASSWORDS = ['おんざはーる', 'オンザハール', 'オントッツォ', 'おんトッツォ'];
@@ -519,7 +519,7 @@
                 const result = await response.json(); // GASからの戻り値(ticket, timestamp)を受け取る
                 if (result.status !== 'success') throw new Error(result.message);
                 
-                return result; // {status: 'success', ticket: 'A', timestamp: '19:30:05'} を返す
+                return result; // {status: 'success', ticket: 1, timestamp: '19:30:05'} を返す
 
             } catch (error) {
                 console.error('Error posting log (create):', error);
@@ -607,16 +607,15 @@
                 const total = calculateTotal(customerOrder);
                 
                 // GASに送信 (isCustomerOrder: true)
-                // GAS側が整理券番号(ticket)と時刻(timestamp)を決定する
                 const result = await logOrderToGAS(true, total, customerOrder);
                 
                 if (result && result.status === 'success') {
                     // GASから返された ticket と timestamp を使用
-                    const ticketId = result.ticket;
+                    const ticketId = result.ticket; // 数値
                     const timestamp = result.timestamp;
                     
                     // 整理券ページに内容をセット
-                    ticketNumberEl.innerText = `整理券番号${ticketId}です。`;
+                    ticketNumberEl.innerText = `整理券番号 ${ticketId} です。`; // 表示を変更
                     receiptSummaryEl.innerHTML = generateOrderSummary(customerOrder);
                     receiptTotalEl.innerText = `合計: ¥${total}`;
                     
