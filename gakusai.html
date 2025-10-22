@@ -3,24 +3,476 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>お茶処 MENU</title>
+    <title>おんちゃ処 - 模擬店</title>
+    
     <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans CJK JP", "Yu Gothic", sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 1. ヘッダー */
+        /* #customer-view headerセレクタで、店員ビューのheaderと競合しないようにする */
+        #customer-view header {
+            background: #fdfdfd; /* 少し明るく */
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        #customer-view header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ロゴ画像スタイル */
+        .logo-img {
+            height: 50px; /* ロゴの高さを指定 */
+            width: auto;  /* 幅は自動調整 */
+        }
+
+        #customer-view header nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #customer-view header nav li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        #customer-view header nav a {
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+        }
+
+        /* 2. メインビジュアル (Hero) */
+        .hero {
+            background: #e6f0e6; /* 薄い緑色 */
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-family: 'Times New Roman', Times, serif; /* メニューの雰囲気に合わせる */
+        }
+
+        /* 3. 共通セクションスタイル */
+        .section {
+            padding: 40px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #4a5c2f; /* ロゴの色に近い緑 */
+        }
+
+        .section h3 {
+            font-size: 24px;
+            color: #333;
+            border-bottom: 2px solid #e6f0e6;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* 4. お品書き (メニュー) */
+        .menu-item {
+            border: none;
+            border-bottom: 2px solid #e6f0e6; /* 薄い緑色の下線 */
+            padding: 15px 10px;
+            background: #fff; /* 背景を白に */
+            
+            /* レイアウト調整 (商品名と価格を横並びにするため) */
+            display: flex;
+            justify-content: space-between; /* 両端揃え */
+            align-items: baseline; /* テキストの底を揃える */
+            flex-wrap: wrap; /* 説明文を改行させる */
+        }
+
+        /* 商品名 (h4) のスタイル */
+        .menu-item h4 {
+            font-size: 1.2rem; /* 少し大きく */
+            font-weight: 600; /* 少し太く */
+            color: #4a5c2f; /* ロゴに近い緑色 */
+            margin: 0;
+            flex-shrink: 0; /* 縮まないように */
+        }
+
+        /* 価格 (p) のスタイル */
+        .menu-item p {
+            font-size: 1.1rem; /* 価格も少し大きく */
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+            white-space: nowrap; /* 価格が改行しないように */
+            padding-left: 10px; /* 商品名との間に隙間 */
+        }
+
+        /* 説明文 (おんちゃセット用) のスタイル */
+        .menu-item p.description {
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #555;
+            flex-basis: 100%; /* 幅を100%にして改行させる */
+            margin-top: 5px; /* 上の商品名との隙間 */
+            padding-left: 0; /* 左の余白をリセット */
+            white-space: normal; /* こちらは改行を許可 */
+        }
+
+        /* 5. お店について・アクセス */
+        #about, #access {
+            text-align: center;
+        }
+
+        /* 6. フッター */
+        #customer-view footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+
+        /* 秘密のスイッチのためのカーソル変更 */
+        #credit-footer {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        /* ▲▲▲ style.cssの内容 ここまで ▲▲▲ */
+
+
+        /* ▼▼▼ 店員さんビューのスタイルをここに追加 ▼▼▼ */
+        
+        /* --- 店員さんビュー --- */
+        
+        /* #staff-viewにスタイルを上書き */
+        div#staff-view.container {
+            display: none; /* 初期状態では非表示 */
+            text-align: left;
+            
+            /* style.cssの.container(max-width: 1000px)を上書き */
+            max-width: 600px; 
+            
+            /* style.cssのbodyスタイルを上書き */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', 'Noto Sans CJK JP', sans-serif;
+            background-color: #fff;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin: 20px auto; /* 中央揃え */
+        }
+        
+        /* 店員ビューのヘッダー */
+        #staff-view h1 {
+            text-align: center;
+            color: #d9534f;
+            border-bottom: 2px solid #d9534f;
+            margin-top: 0;
+            font-family: 'Hiragino Sans', sans-serif; /* フォントを戻す */
+        }
+        
+        /* タブ切り替え */
+        .staff-nav {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .nav-tab {
+            flex: 1;
+            padding: 12px 10px;
+            font-size: 1.1em;
+            font-weight: 700;
+            text-align: center;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+        .nav-tab.active {
+            background-color: #fff;
+            border-bottom-color: #fff;
+        }
+        #order-tab {
+            border-radius: 8px 0 0 8px;
+            border-right: none;
+        }
+        #log-tab {
+            border-radius: 0 8px 8px 0;
+        }
+        
+        /* ページコンテナ */
+        .staff-page {
+            display: none; /* 初期状態は非表示 */
+        }
+        .staff-page.active {
+            display: block; /* アクティブなページのみ表示 */
+        }
+
+        /* オーダーページ */
+        /* .menu-itemとの競合を避けるため、より詳細なセレクタに変更 */
+        #order-form .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10px;
+            border-bottom: 1px solid #eee;
+            background: #fff; /* 念のため指定 */
+        }
+        #order-form .order-item .item-name {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #333; /* 色を戻す */
+        }
+        .count-controls {
+            display: flex;
+            align-items: center;
+        }
+        .count-controls button {
+            width: 40px;
+            height: 40px;
+            font-size: 1.5em;
+            font-weight: 700;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .count-controls .count {
+            font-size: 1.4em;
+            font-weight: 700;
+            width: 50px;
+            text-align: center;
+        }
+        #total-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        #total-price {
+            font-size: 2em;
+            font-weight: 700;
+            color: #333;
+            margin: 15px 0;
+        }
+        .order-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .order-buttons button {
+            flex: 1;
+            font-size: 1.1em;
+            padding: 15px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        #reset-button {
+            background-color: #f0ad4e; /* オレンジ */
+            color: #fff;
+        }
+        #confirm-button {
+            background-color: #5cb85c; /* 緑 */
+            color: #fff;
+        }
+
+        /* LOGページ */
+        #log-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+        .log-entry {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .log-time {
+            font-size: .9em;
+            color: #555;
+        }
+        .log-total {
+            font-size: 1.1em;
+            color: #d9534f;
+        }
+        .log-items {
+            list-style: none;
+            margin-left: -20px;
+            color: #444;
+            margin-top: 8px;
+            padding: 0;
+        }
+        
+        /* 店員ビューのフッター (顧客ビューのfooterと区別) */
+        footer#staff-footer {
+            background: #fff; /* 背景を戻す */
+            color: #333; /* 色を戻す */
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+        #back-to-customer {
+            font-size: 1em;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 700;
+            background-color: #5bc0de; /* 青 */
+            color: #fff;
+        }
+        /* ▲▲▲ 店員さんビュースタイル ここまで ▲▲▲ */
         /* (スタイルは前回と同じなので省略) */
-        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Sans','Noto Sans CJK JP',sans-serif;background-color:#fdfbf6;color:#333;margin:0;padding:15px;text-align:center}.container{max-width:600px;margin:0 auto;background:#fff;border:1px solid #ddd;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,.05);padding:20px}#customer-view{padding:10px}#menu-image{max-width:100%;height:auto;border-radius:4px}#credit-footer{margin-top:15px;font-size:.8em;color:#888;cursor:pointer;user-select:none}#staff-view{display:none;text-align:left}#staff-view h1{text-align:center;color:#d9534f;border-bottom:2px solid #d9534f;margin-top:0}.staff-nav{display:flex;margin-bottom:20px}.nav-tab{flex:1;padding:12px 10px;font-size:1.1em;font-weight:700;text-align:center;border:1px solid #ccc;background-color:#f9f9f9;cursor:pointer}.nav-tab.active{background-color:#fff;border-bottom-color:#fff}#order-tab{border-radius:8px 0 0 8px;border-right:none}#log-tab{border-radius:0 8px 8px 0}.staff-page{display:none}.staff-page.active{display:block}.order-item{display:flex;justify-content:space-between;align-items:center;padding:15px 10px;border-bottom:1px solid #eee}.order-item .item-name{font-size:1.1em;font-weight:700}.count-controls{display:flex;align-items:center}.count-controls button{width:40px;height:40px;font-size:1.5em;font-weight:700;border:1px solid #ccc;border-radius:50%;background-color:#f9f9f9;cursor:pointer;line-height:1}.count-controls .count{font-size:1.4em;font-weight:700;width:50px;text-align:center}#total-section{margin-top:30px;text-align:center}#total-price{font-size:2em;font-weight:700;color:#333;margin:15px 0}.order-buttons{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.order-buttons button{flex:1;font-size:1.1em;padding:15px 10px;border:none;border-radius:5px;cursor:pointer;font-weight:700}#reset-button{background-color:#f0ad4e;color:#fff}#confirm-button{background-color:#5cb85c;color:#fff}#log-container{max-height:400px;overflow-y:auto;border:1px solid #eee;border-radius:5px}.log-entry{padding:15px;border-bottom:1px solid #ddd}.log-entry:last-child{border-bottom:none}.log-header{display:flex;justify-content:space-between;font-weight:700;margin-bottom:10px}.log-time{font-size:.9em;color:#555}.log-total{font-size:1.1em;color:#d9534f}.log-items{list-style:none;margin-left:-20px;color:#444;margin-top:8px;padding:0}#staff-footer{margin-top:30px;text-align:center}#back-to-customer{font-size:1em;padding:12px 20px;border:none;border-radius:5px;cursor:pointer;font-weight:700;background-color:#5bc0de;color:#fff}
+        body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Noto Sans CJK JP","Yu Gothic",sans-serif;margin:0;padding:0;line-height:1.6;color:#333}.container{width:90%;max-width:1000px;margin:0 auto;padding:0 20px}#customer-view header{background:#fdfdfd;border-bottom:1px solid #eee;padding:10px 0}#customer-view header .container{display:flex;justify-content:space-between;align-items:center}.logo-img{height:50px;width:auto}#customer-view header nav ul{margin:0;padding:0;list-style:none}#customer-view header nav li{display:inline-block;margin-left:20px}#customer-view header nav a{text-decoration:none;color:#555;font-weight:700}.hero{background:#e6f0e6;padding:60px 0;text-align:center}.hero h2{font-size:36px;margin-bottom:10px;font-family:'Times New Roman',Times,serif}.section{padding:40px 0;border-bottom:1px solid #f0f0f0}.section h2{text-align:center;font-size:28px;margin-bottom:30px;color:#4a5c2f}.section h3{font-size:24px;color:#333;border-bottom:2px solid #e6f0e6;padding-bottom:5px;margin-bottom:20px}.menu-item{border:none;border-bottom:2px solid #e6f0e6;padding:15px 10px;background:#fff;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap}.menu-item h4{font-size:1.2rem;font-weight:600;color:#4a5c2f;margin:0;flex-shrink:0}.menu-item p{font-size:1.1rem;font-weight:700;color:#333;margin:0;white-space:nowrap;padding-left:10px}.menu-item p.description{font-size:.9rem;font-weight:400;color:#555;flex-basis:100%;margin-top:5px;padding-left:0;white-space:normal}#about,#access{text-align:center}#customer-view footer{background:#333;color:#fff;text-align:center;padding:20px 0;margin-top:30px}#credit-footer{cursor:pointer;user-select:none}div#staff-view.container{display:none;text-align:left;max-width:600px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Sans','Noto Sans CJK JP',sans-serif;background-color:#fff;padding:20px;line-height:1.6;color:#333;border:1px solid #ddd;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,.05);margin:20px auto}#staff-view h1{text-align:center;color:#d9534f;border-bottom:2px solid #d9534f;margin-top:0;font-family:'Hiragino Sans',sans-serif}.staff-nav{display:flex;margin-bottom:20px}.nav-tab{flex:1;padding:12px 10px;font-size:1.1em;font-weight:700;text-align:center;border:1px solid #ccc;background-color:#f9f9f9;cursor:pointer}.nav-tab.active{background-color:#fff;border-bottom-color:#fff}#order-tab{border-radius:8px 0 0 8px;border-right:none}#log-tab{border-radius:0 8px 8px 0}.staff-page{display:none}.staff-page.active{display:block}#order-form .order-item{display:flex;justify-content:space-between;align-items:center;padding:15px 10px;border-bottom:1px solid #eee;background:#fff}#order-form .order-item .item-name{font-size:1.1em;font-weight:700;color:#333}.count-controls{display:flex;align-items:center}.count-controls button{width:40px;height:40px;font-size:1.5em;font-weight:700;border:1px solid #ccc;border-radius:50%;background-color:#f9f9f9;cursor:pointer;line-height:1}.count-controls .count{font-size:1.4em;font-weight:700;width:50px;text-align:center}#total-section{margin-top:30px;text-align:center}#total-price{font-size:2em;font-weight:700;color:#333;margin:15px 0}.order-buttons{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.order-buttons button{flex:1;font-size:1.1em;padding:15px 10px;border:none;border-radius:5px;cursor:pointer;font-weight:700}#reset-button{background-color:#f0ad4e;color:#fff}#confirm-button{background-color:#5cb85c;color:#fff}#log-container{max-height:400px;overflow-y:auto;border:1px solid #eee;border-radius:5px}.log-entry{padding:15px;border-bottom:1px solid #ddd}.log-entry:last-child{border-bottom:none}.log-header{display:flex;justify-content:space-between;font-weight:700;margin-bottom:10px}.log-time{font-size:.9em;color:#555}.log-total{font-size:1.1em;color:#d9534f}.log-items{list-style:none;margin-left:-20px;color:#444;margin-top:8px;padding:0}footer#staff-footer{background:#fff;color:#333;text-align:center;padding:20px 0;margin-top:30px}#back-to-customer{font-size:1em;padding:12px 20px;border:none;border-radius:5px;cursor:pointer;font-weight:700;background-color:#5bc0de;color:#fff}
     </style>
 </head>
 <body>
 
-    <div id="customer-view" class="container">
+    <div id="customer-view">
         <header>
-            <img src="https://cdn.discordapp.com/attachments/1027839972293758978/1430230571727978556/IMG_0106.JPG?ex=68f90584&is=68f7b404&hm=bce0aa484d41f3e441c2b61a96dcd1301bb5729fbcc1962461a4d6a380ca3795&" alt="メニュー" id="menu-image">
+            <div class="container">
+                <a href="#"><img src="https://cdn.discordapp.com/attachments/1181206556193329204/1430417826119684106/IMG_0105.png?ex=68f9b3e9&is=68f86269&hm=a6b408007ee7fa235aeb9fc784f1297652815712fe13c2b3fdd986bcd87da7fb&" alt="おんちゃ処 ロゴ" class="logo-img"></a>
+                <nav>
+                    <ul>
+                        <li><a href="#menu">お品書き</a></li>
+                        <li><a href="#about">お店について</a></li>
+                        <li><a href="#access">アクセス</a></li>
+                    </ul>
+                </nav>
+            </div>
         </header>
-        
+
+        <section class="hero">
+            <div class="container">
+                <h2>A little luxury for your everyday</h2>
+                <p>おんちゃ処へようこそ。</p>
+                <img src="https://cdn.discordapp.com/attachments/1181206556193329204/1430417826119684106/IMG_0105.png?ex=68f9b3e9&is=68f86269&hm=a6b408007ee7fa235aeb9fc784f1297652815712fe13c2b3fdd986bcd87da7fb&" alt="おんちゃ処 メインイメージ" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 20px;">
+            </div>
+        </section>
+
+        <section id="menu" class="container section">
+            <h2>お品書き (MENU)</h2>
+            
+            <h3>Food</h3>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <h4>★ おんちゃセット</h4>
+                    <p>¥500</p>
+                    <p class="description">団子3種 + 100円ドリンク</p> </div>
+                <div class="menu-item">
+                    <h4>きな粉</h4>
+                    <p>¥150</p>
+                </div>
+                <div class="menu-item">
+                    <h4>みたらし</h4>
+                    <p>¥150</p>
+                </div>
+                <div class="menu-item">
+                    <h4>つぶあん</h4>
+                    <p>¥150</p>
+                </div>
+                <div class="menu-item">
+                    <h4>こしあん</h4>
+                    <p>¥150</p>
+                </div>
+                <div class="menu-item">
+                    <h4>のり醤油</h4>
+                    <p>¥150</p>
+                </div>
+                <div class="menu-item">
+                    <h4>あんこ増量</h4>
+                    <p>¥20</p>
+                </div>
+                <div class="menu-item">
+                    <h4>きな粉増量</h4>
+                    <p>¥20</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">Drink</h3>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <h4>緑茶</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>烏龍茶</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>水</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>コーラ</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>ソーダ</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>ジンジャーエール</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>ラムネ</h4>
+                    <p>¥150</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px;">* 価格はすべて税込です</p>
+
+        </section>
+
+        <section id="about" class="container section">
+            <h2>お店について</h2>
+            <p style="text-align: center;">一杯のお茶がくれる、やすらぎのひととき。一口のお団子がくれる、小さな幸せ。「おんちゃ処」は、そんな「ささやかな贅沢」を大切にするお店です。忙しい日常を少しだけ忘れられるような、心温まる時間をお過ごしください。</p>
+        </section>
+
+        <section id="access" class="container section">
+            <h2>出店場所</h2>
+            <p style="text-align: center;">皆様のお越しをお待ちしております！</p>
+            <img src="https://media.discordapp.net/attachments/1181206556193329204/1430416379131072623/image.png?ex=68f9b290&is=68f86110&hm=1939ec9d2a5d8669054a44bfe5f295cc761fb5c7137d2ca4282f36e1805330ba&=&format=webp&quality=lossless&width=527&height=525" 
+                 alt="お店の場所" 
+                 style="width: 100%; max-width: 527px; display: block; margin: 0 auto; border-radius: 8px;">
+        </section>
+
         <footer>
-            <p id="credit-footer">"おんちゃ処"_2025D4模擬店</p>
+            <div class="container">
+                <p id="credit-footer">&copy; 2025 おんちゃ処. All rights reserved.</p>
+            </div>
         </footer>
     </div>
-
     <div id="staff-view" class="container">
         <header>
             <h1>【店員用】管理パネル</h1>
@@ -55,10 +507,9 @@
 
 
     <script>
-        // ▼▼▼ ご指定のGASのURLをセットしました ▼▼▼
+        // ▼▼▼ ご指定のGASのURL（変更なし） ▼▼▼
         const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxQ2pUukX2ZPSXwa-IABIEqD7d3fFVYCnZQssWFNfkD6UGsPtP3XfTS4N7c7s7P2RFX/exec';
         
-
         // --- メニューデータ ---
         const menuItems = {
             'onset': ['おんちゃセット', 500],
@@ -107,7 +558,7 @@
                 const name = item[0];
                 
                 const el = document.createElement('div');
-                el.className = 'order-item';
+                el.className = 'order-item'; // 店員ビュー専用のクラス
                 el.innerHTML = `
                     <span class="item-name">${name}</span>
                     <div class="count-controls">
@@ -191,19 +642,47 @@
             }
         }
         
-        // --- 秘密の操作（フッターをクリック） ---
+        // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+        // --- 秘密の操作（合言葉認証を追加） ---
+        // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
         let clickCount = 0;
         creditFooter.addEventListener('click', () => {
             clickCount++;
+            
+            // 5回クリックでプロンプト表示
             if (clickCount >= 5) {
-                customerView.style.display = 'none';
-                staffView.style.display = 'block';
-                clickCount = 0; 
-                // 店員ビュー表示時にログを読み込む
-                loadAndRenderLog();
+                
+                // 1. 合言葉の質問を表示
+                const userInput = prompt('【合言葉】\nおんちゃの有名なコラ画像は？');
+                
+                // 2. 正解のリスト
+                const passwords = ['おんざはーる', 'オンザハール', 'オントッツォ', 'おんトッツォ'];
+
+                if (userInput === null) {
+                    // キャンセルが押された場合
+                    clickCount = 0; // カウンターリセット
+                } else if (passwords.includes(userInput)) {
+                    // 3. 正解の場合
+                    customerView.style.display = 'none';
+                    staffView.style.display = 'block';
+                    clickCount = 0; // カウンターをリセット
+                    // 店員ビュー表示時にログを読み込む
+                    loadAndRenderLog();
+                } else {
+                    // 4. 不正解の場合
+                    alert('お前さんは誰や');
+                    clickCount = 0; // カウンターリセット
+                }
+                
             }
-            setTimeout(() => { clickCount = 0; }, 3000);
+            
+            // クリックが途切れたらリセット（3秒以内）
+            setTimeout(() => {
+                clickCount = 0;
+            }, 3000);
         });
+        // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
 
         // --- イベントリスナーの設定 ---
         
