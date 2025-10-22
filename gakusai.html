@@ -6,12 +6,9 @@
     <title>おんちゃ処 - 模擬店</title>
     
     <style>
-        /* --- ページ切り替え --- */
-        .page { display: none; }
-        .page.active { display: block; }
-        
-        /* --- 1. お客様トップページ (旧index.html) --- */
-        #page-customer-top { background-color: #fff; /* 背景を白に */ }
+        /* (CSSは変更ありません。省略) */
+        .page{display:none;}.page.active{display:block;}
+        #page-customer-top{background-color:#fff;}
         #page-customer-top body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Noto Sans CJK JP","Yu Gothic",sans-serif;margin:0;padding:0;line-height:1.6;color:#333}
         #page-customer-top .container{width:90%;max-width:1000px;margin:0 auto;padding:0 20px}
         #page-customer-top header{background:#fdfdfd;border-bottom:1px solid #eee;padding:10px 0}
@@ -32,68 +29,29 @@
         #page-customer-top #about,#page-customer-top #access{text-align:center}
         #page-customer-top footer{background:#333;color:#fff;text-align:center;padding:20px 0;margin-top:30px}
         #page-customer-top #credit-footer{cursor:pointer;user-select:none}
-        /* お客様トップ: 注文ボタン */
-        #goto-order-button {
-            display: block;
-            width: 80%;
-            max-width: 400px;
-            margin: 30px auto;
-            padding: 20px;
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #fff;
-            background-color: #d9534f;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        /* --- 2. 顧客注文ページ --- */
-        #page-customer-order .menu-item { border-bottom: 2px solid #e6f0e6; padding: 15px 10px; background: #fff; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-        #page-customer-order .menu-item-details { flex: 1 1 200px; }
-        #page-customer-order .menu-item-details h4 { font-size: 1.2rem; font-weight: 600; color: #4a5c2f; margin: 0; }
-        #page-customer-order .menu-item-details p.description { font-size: 0.9rem; font-weight: normal; color: #555; margin-top: 5px; }
-        #page-customer-order .menu-item-controls { display: flex; align-items: center; justify-content: flex-end; gap: 15px; flex: 1 1 180px; white-space: nowrap; }
-        #page-customer-order .menu-item-controls p { font-size: 1.1rem; font-weight: bold; color: #333; margin: 0; min-width: 50px; text-align: right; }
-        #page-customer-order #order-summary { background: #fff; border-top: 2px solid #4a5c2f; padding: 20px; position: sticky; bottom: 0; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); text-align: center; }
-        #page-customer-order #customer-total-price { font-size: 1.8em; font-weight: bold; color: #333; margin: 10px 0; }
-        #page-customer-order #customer-confirm-button { background-color: #5cb85c; color: white; padding: 15px 30px; font-size: 1.2em; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; width: 100%; max-width: 400px; }
-        #page-customer-order #cancel-customer-order-button { background-color: #aaa; margin-top: 10px; }
-
-        /* --- 3. 店員確認 & 4. 整理券ページ --- */
-        #page-staff-confirm, #page-customer-receipt {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            text-align: center; padding: 30px; max-width: 600px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        #page-staff-confirm h2, #page-customer-receipt h2 { font-size: 1.5em; color: #4a5c2f; margin-top: 0; }
-        .order-summary-list { text-align: left; list-style: none; padding: 0; margin: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; }
-        .order-summary-list li { padding: 10px 5px; font-size: 1.1em; border-bottom: 1px dotted #ccc; }
-        .order-summary-list li:last-child { border-bottom: none; }
-        .order-summary-list span { float: right; font-weight: bold; }
-        #staff-confirm-total, #receipt-total { font-size: 1.8em; font-weight: bold; color: #d9534f; margin: 20px 0; }
-        #payment-received-button { background-color: #5cb85c; color: white; padding: 15px 30px; font-size: 1.2em; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; }
-        #cancel-order-button { background-color: #f0ad4e; color: white; padding: 15px 30px; font-size: 1.2em; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; }
-        #ticket-number { font-size: 2.5em; font-weight: bold; color: #d9534f; margin: 20px 0; }
-        #pickup-button { background-color: #5bc0de; color: white; padding: 15px 30px; font-size: 1.2em; font-weight: bold; border: none; border-radius: 8px; cursor: pointer; margin-top: 20px; }
-
-        /* --- 5. 店員管理パネル --- */
-        /* ▼▼▼ [不具合修正] display:none; を削除しました ▼▼▼ */
-        div#page-staff-panel.container{
-            text-align:left;
-            max-width:600px;
-            font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Sans','Noto Sans CJK JP',sans-serif;
-            background-color:#fff;
-            padding:20px;
-            line-height:1.6;
-            color:#333;
-            border:1px solid #ddd;
-            border-radius:8px;
-            box-shadow:0 4px 10px rgba(0,0,0,.05);
-            margin:20px auto
-        }
-        /* ▲▲▲ 修正完了 ▲▲▲ */
+        #goto-order-button{display:block;width:80%;max-width:400px;margin:30px auto;padding:20px;font-size:1.5em;font-weight:700;color:#fff;background-color:#d9534f;border:none;border-radius:10px;cursor:pointer;text-align:center;text-decoration:none}
+        #page-customer-order .menu-item{border-bottom:2px solid #e6f0e6;padding:15px 10px;background:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap}
+        #page-customer-order .menu-item-details{flex:1 1 200px}
+        #page-customer-order .menu-item-details h4{font-size:1.2rem;font-weight:600;color:#4a5c2f;margin:0}
+        #page-customer-order .menu-item-details p.description{font-size:.9rem;font-weight:400;color:#555;margin-top:5px}
+        #page-customer-order .menu-item-controls{display:flex;align-items:center;justify-content:flex-end;gap:15px;flex:1 1 180px;white-space:nowrap}
+        #page-customer-order .menu-item-controls p{font-size:1.1rem;font-weight:700;color:#333;margin:0;min-width:50px;text-align:right}
+        #page-customer-order #order-summary{background:#fff;border-top:2px solid #4a5c2f;padding:20px;position:sticky;bottom:0;box-shadow:0 -4px 10px rgba(0,0,0,.1);text-align:center}
+        #page-customer-order #customer-total-price{font-size:1.8em;font-weight:700;color:#333;margin:10px 0}
+        #page-customer-order #customer-confirm-button{background-color:#5cb85c;color:#fff;padding:15px 30px;font-size:1.2em;font-weight:700;border:none;border-radius:8px;cursor:pointer;width:100%;max-width:400px}
+        #page-customer-order #cancel-customer-order-button{background-color:#aaa;margin-top:10px}
+        #page-staff-confirm,#page-customer-receipt{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;text-align:center;padding:30px;max-width:600px;margin:40px auto;background:#fff;border-radius:8px;box-shadow:0 4px 15px rgba(0,0,0,.1)}
+        #page-staff-confirm h2,#page-customer-receipt h2{font-size:1.5em;color:#4a5c2f;margin-top:0}
+        .order-summary-list{text-align:left;list-style:none;padding:0;margin:20px 0;border-top:1px solid #eee;border-bottom:1px solid #eee}
+        .order-summary-list li{padding:10px 5px;font-size:1.1em;border-bottom:1px dotted #ccc}
+        .order-summary-list li:last-child{border-bottom:none}
+        .order-summary-list span{float:right;font-weight:700}
+        #staff-confirm-total,#receipt-total{font-size:1.8em;font-weight:700;color:#d9534f;margin:20px 0}
+        #payment-received-button{background-color:#5cb85c;color:#fff;padding:15px 30px;font-size:1.2em;font-weight:700;border:none;border-radius:8px;cursor:pointer}
+        #cancel-order-button{background-color:#f0ad4e;color:#fff;padding:15px 30px;font-size:1.2em;font-weight:700;border:none;border-radius:8px;cursor:pointer;margin-top:10px}
+        #ticket-number{font-size:2.5em;font-weight:700;color:#d9534f;margin:20px 0}
+        #pickup-button{background-color:#5bc0de;color:#fff;padding:15px 30px;font-size:1.2em;font-weight:700;border:none;border-radius:8px;cursor:pointer;margin-top:20px}
+        div#page-staff-panel.container{text-align:left;max-width:600px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Sans','Noto Sans CJK JP',sans-serif;background-color:#fff;padding:20px;line-height:1.6;color:#333;border:1px solid #ddd;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,.05);margin:20px auto}
         #page-staff-panel h1{text-align:center;color:#d9534f;border-bottom:2px solid #d9534f;margin-top:0;font-family:'Hiragino Sans',sans-serif}
         .staff-nav{display:flex;margin-bottom:20px}
         .nav-tab{flex:1;padding:12px 10px;font-size:1.1em;font-weight:700;text-align:center;border:1px solid #ccc;background-color:#f9f9f9;cursor:pointer}
@@ -117,20 +75,18 @@
         #page-staff-log .log-entry:last-child{border-bottom:none}
         #page-staff-log .log-header{display:flex;justify-content:space-between;font-weight:700;margin-bottom:10px}
         #page-staff-log .log-ticket-time{display:flex;gap:10px;align-items:center;}
-        #page-staff-log .log-ticket{font-size:1.1em;color:#d9534f;font-weight:bold;}
+        #page-staff-log .log-ticket{font-size:1.1em;color:#d9534f;font-weight:700}
         #page-staff-log .log-time{font-size:.9em;color:#555}
         #page-staff-log .log-total{font-size:1.1em;color:#333}
-        #page-staff-log .log-status{font-size: 1.0em; font-weight: bold;}
-        #page-staff-log .log-status.pending { color: #d9534f; } /* 未 */
-        #page-staff-log .log-status.completed { color: #5cb85c; } /* 済 */
+        #page-staff-log .log-status{font-size:1em;font-weight:700}
+        #page-staff-log .log-status.pending{color:#d9534f}
+        #page-staff-log .log-status.completed{color:#5cb85c}
         #page-staff-log .log-items{list-style:none;margin-left:0;color:#444;margin-top:8px;padding:0}
         footer#staff-footer{background:#fff;color:#333;text-align:center;padding:20px 0;margin-top:30px}
         #back-to-customer{font-size:1em;padding:12px 20px;border:none;border-radius:5px;cursor:pointer;font-weight:700;background-color:#5bc0de;color:#fff}
-        
-        /* --- 共通カウントボタン --- */
-        .count-controls { display: flex; align-items: center; }
-        .count-controls button { width: 36px; height: 36px; font-size: 1.5em; font-weight: 700; border: 1px solid #ccc; border-radius: 50%; background-color: #f9f9f9; cursor: pointer; line-height: 1; }
-        .count-controls .count { font-size: 1.2em; font-weight: 700; width: 40px; text-align: center; }
+        .count-controls{display:flex;align-items:center}
+        .count-controls button{width:36px;height:36px;font-size:1.5em;font-weight:700;border:1px solid #ccc;border-radius:50%;background-color:#f9f9f9;cursor:pointer;line-height:1}
+        .count-controls .count{font-size:1.2em;font-weight:700;width:40px;text-align:center}
     </style>
 </head>
 <body>
@@ -145,7 +101,7 @@
                         <li><a href="#about">お店について</a></li>
                         <li><a href="#access">アクセス</a></li>
                         <li><a href="#receipt" id="goto-receipt-button" style="color:#d9534f;">整理券確認</a></li>
-                        </ul>
+                    </ul>
                 </nav>
             </div>
         </header>
@@ -282,16 +238,12 @@
 
     <script>
         // ▼▼▼ ご指定のGASのURL（変更なし） ▼▼▼
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxW0HjtF15pf0wQ_y9B6wfg-8O9CBwPR5TJ6sfod3APFKv_LPttI5LSRJWLry2nMXwK/exec';
+        const GAS_WEB_APP_URL = 'https.script.google.com/macros/s/AKfycbxW0HjtF15pf0wQ_y9B6wfg-8O9CBwPR5TJ6sfod3APFKv_LPttI5LSRJWLry2nMXwK/exec';
         
         // --- 合言葉 ---
         const PASSWORDS = ['おんざはーる', 'オンザハール', 'オントッツォ', 'おんトッツォ'];
         
-        // --- 整理券 (A-Z) ---
-        const TICKET_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        let ticketIndex = 0;
-        
-        // --- メニューデータ (種別 `type` と説明 `desc` を追加) ---
+        // --- メニューデータ ---
         const menuItems = {
             'onset': { name: '★ おんちゃセット', price: 500, type: 'food', desc: '団子3種 + 100円ドリンク' },
             'kinako': { name: 'きな粉', price: 150, type: 'food' },
@@ -318,7 +270,6 @@
         const customerTopView = document.getElementById('page-customer-top');
         const creditFooter = document.getElementById('credit-footer');
         const gotoOrderButton = document.getElementById('goto-order-button');
-        // ▼▼▼ [機能追加] 整理券ボタンDOM取得 ▼▼▼
         const gotoReceiptButton = document.getElementById('goto-receipt-button');
 
         const customerOrderView = document.getElementById('page-customer-order');
@@ -384,7 +335,6 @@
 
         // --- 共通: 時刻フォーマット ---
         function getTimestamp() {
-            // GAS側で「'」がエラーになるのを防ぐため、標準的な HH:MM:SS 形式に変更
             const now = new Date();
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
@@ -397,7 +347,6 @@
         // --- 顧客注文フロー (2. 顧客注文ページ) ---
         // ==========================================
         
-        // フォーム初期化
         function initializeCustomerOrderForm() {
             foodMenuGrid.innerHTML = ''; 
             drinkMenuGrid.innerHTML = '';
@@ -430,7 +379,6 @@
             updateCustomerTotal();
         }
 
-        // 注文数更新
         window.updateCustomerOrder = function(id, change) {
             const newCount = customerOrder[id] + change;
             if (newCount >= 0) { 
@@ -440,7 +388,6 @@
             }
         }
         
-        // 合計表示更新
         function updateCustomerTotal() {
             const total = calculateTotal(customerOrder);
             customerTotalPriceEl.innerText = `合計: ¥${total}`;
@@ -450,7 +397,6 @@
         // --- 店員手動フロー (5. 店員パネル) ---
         // ==========================================
         
-        // フォーム初期化
         function initializeStaffOrderForm() {
             staffOrderForm.innerHTML = ''; 
             staffOrder = {}; 
@@ -475,7 +421,6 @@
             updateStaffTotal();
         }
 
-        // 注文数更新
         window.updateStaffOrder = function(id, change) {
             const newCount = staffOrder[id] + change;
             if (newCount >= 0) { 
@@ -485,13 +430,11 @@
             }
         }
         
-        // 合計表示更新
         function updateStaffTotal() {
             const total = calculateTotal(staffOrder);
             staffTotalPriceEl.innerText = `合計: ¥${total}`;
         }
         
-        // 店員パネルのタブ切り替え
         orderTab.addEventListener('click', () => {
             staffOrderPage.classList.add('active');
             staffLogPage.classList.remove('active');
@@ -503,7 +446,7 @@
             staffLogPage.classList.add('active');
             orderTab.classList.remove('active');
             logTab.classList.add('active');
-            loadAndRenderLog(); // LOGタブを開いたら読み込む
+            loadAndRenderLog(); 
         });
 
 
@@ -511,14 +454,16 @@
         // --- GAS (スプレッドシート連携) ---
         // ==========================================
 
-        // --- (GET) LOGページの描画 ---
         async function loadAndRenderLog() {
             logContainer.innerHTML = '<p style="text-align: center; color: #888;">ログを読み込み中です...</p>';
             try {
+                // ▼▼▼ [修正] fetchから `mode: 'no-cors'` を削除 ▼▼▼
                 const response = await fetch(GAS_WEB_APP_URL);
+                if (!response.ok) throw new Error(`Network response was not ok: ${response.statusText}`);
+                
                 const result = await response.json();
-
                 if (result.status !== 'success') throw new Error(result.message);
+                
                 const logs = result.data;
                 if (logs.length === 0) {
                     logContainer.innerHTML = '<p style="text-align: center; color: #888;">まだ確定された注文はありません。</p>';
@@ -553,10 +498,7 @@
         }
         
         // --- (POST) 新規注文をLOG書き込み (action: 'create') ---
-        async function logOrderToGAS(ticket, total, order, timestamp) {
-            const orderTimestamp = timestamp || getTimestamp(); // timestampがなければ今作る
-
-            // スプレッドシート用のサマリ文字列を作成
+        async function logOrderToGAS(isCustomerOrder, total, order) {
             let itemsToLog = [];
             for (const id in order) {
                 if (order[id] > 0) {
@@ -567,30 +509,34 @@
             
             const dataToPost = {
                 action: 'create',
-                ticket: ticket,
-                timestamp: orderTimestamp,
+                isCustomerOrder: isCustomerOrder, // true or false
                 itemsSummary: itemsSummary,
                 total: total
             };
 
             try {
-                // ボタンを無効化
-                if (ticket !== "手動") paymentReceivedButton.disabled = true;
+                if (isCustomerOrder) paymentReceivedButton.disabled = true;
                 else staffConfirmButton.disabled = true;
 
-                await fetch(GAS_WEB_APP_URL, {
-                    method: 'POST', mode: 'no-cors', cache: 'no-cache',
-                    headers: { 'Content-Type': 'application/json' },
-                    redirect: 'follow', body: JSON.stringify(dataToPost) 
+                // ▼▼▼ [修正] fetchから `mode: 'no-cors'` と `headers` を削除 ▼▼▼
+                const response = await fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(dataToPost) 
                 });
-                return true; // 送信成功
+                
+                if (!response.ok) throw new Error(`Network error: ${response.statusText}`);
+                
+                const result = await response.json(); // GASからの戻り値(ticket, timestamp)を受け取る
+                if (result.status !== 'success') throw new Error(result.message);
+                
+                return result; // {status: 'success', ticket: 'A', timestamp: '19:30:05'} を返す
+
             } catch (error) {
                 console.error('Error posting log (create):', error);
                 alert(`ログの書き込みに失敗しました: ${error.message}`);
-                return false; // 送信失敗
+                return null; // 失敗
             } finally {
-                // ボタンを有効化
-                if (ticket !== "手動") paymentReceivedButton.disabled = false;
+                if (isCustomerOrder) paymentReceivedButton.disabled = false;
                 else staffConfirmButton.disabled = false;
             }
         }
@@ -604,14 +550,18 @@
             };
             
             try {
-                await fetch(GAS_WEB_APP_URL, {
-                    method: 'POST', mode: 'no-cors', cache: 'no-cache',
-                    headers: { 'Content-Type': 'application/json' },
-                    redirect: 'follow', body: JSON.stringify(dataToPost) 
+                // ▼▼▼ [修正] fetchから `mode: 'no-cors'` と `headers` を削除 ▼▼▼
+                const response = await fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(dataToPost) 
                 });
+                if (!response.ok) throw new Error(`Network error: ${response.statusText}`);
+                
+                await response.json(); // 成功したか確認（中身は使わない）
+
             } catch (error) {
                 console.error('Error posting log (update):', error);
-                // ここでのエラーは顧客に通知しない（裏側処理のため）
+                // ここでのエラーは顧客に通知しない
             }
         }
 
@@ -622,19 +572,16 @@
         // --- 顧客トップページ ---
         gotoOrderButton.addEventListener('click', (e) => {
             e.preventDefault();
-            initializeCustomerOrderForm(); // 注文ページを開く前に初期化
+            initializeCustomerOrderForm(); 
             showPage('page-customer-order');
         });
         
-        // ▼▼▼ [機能追加] 整理券確認ボタンのリスナー ▼▼▼
         gotoReceiptButton.addEventListener('click', (e) => {
             e.preventDefault();
             const ticketId = customerReceiptView.dataset.ticketId;
             if (ticketId) {
-                // 既に整理券情報が保存されている場合
                 showPage('page-customer-receipt');
             } else {
-                // まだ整理券が発行されていない場合
                 alert('この端末ではまだ注文が行われていません。\n「セルフオーダーはこちら」からご注文ください。');
             }
         });
@@ -660,22 +607,23 @@
             showPage('page-customer-order');
         });
 
+        // ▼▼▼ [修正] GASからの戻り値(result)を使うように変更 ▼▼▼
         paymentReceivedButton.addEventListener('click', async () => {
             const userInput = prompt('【合言葉】\nおんちゃの有名なコラ画像は？');
             if (userInput === null) return; 
 
             if (PASSWORDS.includes(userInput)) {
                 // 認証成功
-                const ticketId = TICKET_CHARS[ticketIndex];
-                const timestamp = getTimestamp();
                 const total = calculateTotal(customerOrder);
                 
-                // GASに送信
-                const success = await logOrderToGAS(ticketId, total, customerOrder, timestamp);
+                // GASに送信 (isCustomerOrder: true)
+                // GAS側が整理券番号(ticket)と時刻(timestamp)を決定する
+                const result = await logOrderToGAS(true, total, customerOrder);
                 
-                if (success) {
-                    // 整理券番号を次に進める (A->B, Z->A)
-                    ticketIndex = (ticketIndex + 1) % 26; 
+                if (result && result.status === 'success') {
+                    // GASから返された ticket と timestamp を使用
+                    const ticketId = result.ticket;
+                    const timestamp = result.timestamp;
                     
                     // 整理券ページに内容をセット
                     ticketNumberEl.innerText = `整理券番号${ticketId}です。`;
@@ -686,10 +634,7 @@
                     customerReceiptView.dataset.ticketId = ticketId;
                     customerReceiptView.dataset.timestamp = timestamp;
                     
-                    // 整理券ページを表示
                     showPage('page-customer-receipt');
-                    
-                    // (裏側で)次の客のために注文フォームをリセット
                     initializeCustomerOrderForm();
                 }
                 
@@ -700,14 +645,16 @@
         
         // --- 整理券ページ ---
         pickupButton.addEventListener('click', () => {
-            // (裏側で)ステータスを「済」に更新
             const ticketId = customerReceiptView.dataset.ticketId;
             const timestamp = customerReceiptView.dataset.timestamp;
             if (ticketId && timestamp) {
+                // (裏側で)ステータスを「済」に更新
                 updateOrderStatus(ticketId, timestamp);
             }
+            // この端末の整理券情報をクリア
+            customerReceiptView.dataset.ticketId = "";
+            customerReceiptView.dataset.timestamp = "";
             
-            // 顧客をトップページに戻す
             showPage('page-customer-top');
         });
 
@@ -721,10 +668,8 @@
                 clickCount = 0; 
                 
                 if (PASSWORDS.includes(userInput)) {
-                    // 認証成功 -> 店員パネル表示
-                    initializeStaffOrderForm(); // 店員パネルを開くときに初期化
+                    initializeStaffOrderForm(); 
                     showPage('page-staff-panel');
-                    // デフォルトでオーダータブを開く
                     staffOrderPage.classList.add('active');
                     staffLogPage.classList.remove('active');
                     orderTab.classList.add('active');
@@ -753,10 +698,10 @@
                 return;
             }
             
-            // GASに送信 (Ticket: "手動")
-            const success = await logOrderToGAS("手動", total, staffOrder);
+            // GASに送信 (isCustomerOrder: false)
+            const result = await logOrderToGAS(false, total, staffOrder);
             
-            if (success) {
+            if (result && result.status === 'success') {
                 alert('ログに記録しました。');
                 initializeStaffOrderForm(); // フォームリセット
             }
