@@ -237,8 +237,8 @@
 
 
     <script>
-        // ▼▼▼ ご指定のGASのURL（変更なし） ▼▼▼
-        const GAS_WEB_APP_URL = 'https.script.google.com/macros/s/AKfycbxW0HjtF15pf0wQ_y9B6wfg-8O9CBwPR5TJ6sfod3APFKv_LPttI5LSRJWLry2nMXwK/exec';
+        // ▼▼▼ 新しいGASのURLに差し替えました ▼▼▼
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyct-4J8iapbm6gn1b4e28NZ5vA-mAoSgCq75EnI8FoE_SjBx8yh_ZxZ0iDk7k5fWwO/exec';
         
         // --- 合言葉 ---
         const PASSWORDS = ['おんざはーる', 'オンザハール', 'オントッツォ', 'おんトッツォ'];
@@ -332,17 +332,7 @@
             }
             return total;
         }
-
-        // --- 共通: 時刻フォーマット ---
-        function getTimestamp() {
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            return `${hours}:${minutes}:${seconds}`;
-        }
         
-
         // ==========================================
         // --- 顧客注文フロー (2. 顧客注文ページ) ---
         // ==========================================
