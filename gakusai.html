@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>おんちゃ処 - 模擬店</title>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Noto Sans CJK JP", "Yu Gothic", sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 1. ヘッダー */
+        /* #customer-view headerセレクタで、店員ビューのheaderと競合しないようにする */
+        #customer-view header {
+            background: #fdfdfd; /* 少し明るく */
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        #customer-view header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ロゴ画像スタイル */
+        .logo-img {
+            height: 50px; /* ロゴの高さを指定 */
+            width: auto;  /* 幅は自動調整 */
+        }
+
+        #customer-view header nav ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #customer-view header nav li {
+            display: inline-block;
+            margin-left: 20px;
+        }
+
+        #customer-view header nav a {
+            text-decoration: none;
+            color: #555;
+            font-weight: bold;
+        }
+
+        /* 2. メインビジュアル (Hero) */
+        .hero {
+            background: #e6f0e6; /* 薄い緑色 */
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            font-family: 'Times New Roman', Times, serif; /* メニューの雰囲気に合わせる */
+        }
+
+        /* 3. 共通セクションスタイル */
+        .section {
+            padding: 40px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: #4a5c2f; /* ロゴの色に近い緑 */
+        }
+
+        .section h3 {
+            font-size: 24px;
+            color: #333;
+            border-bottom: 2px solid #e6f0e6;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+
+        /* 4. お品書き (メニュー) */
+        .menu-item {
+            border: none;
+            border-bottom: 2px solid #e6f0e6; /* 薄い緑色の下線 */
+            padding: 15px 10px;
+            background: #fff; /* 背景を白に */
+            
+            /* レイアウト調整 (商品名と価格を横並びにするため) */
+            display: flex;
+            justify-content: space-between; /* 両端揃え */
+            align-items: baseline; /* テキストの底を揃える */
+            flex-wrap: wrap; /* 説明文を改行させる */
+        }
+
+        /* 商品名 (h4) のスタイル */
+        .menu-item h4 {
+            font-size: 1.2rem; /* 少し大きく */
+            font-weight: 600; /* 少し太く */
+            color: #4a5c2f; /* ロゴに近い緑色 */
+            margin: 0;
+            flex-shrink: 0; /* 縮まないように */
+        }
+
+        /* 価格 (p) のスタイル */
+        .menu-item p {
+            font-size: 1.1rem; /* 価格も少し大きく */
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+            white-space: nowrap; /* 価格が改行しないように */
+            padding-left: 10px; /* 商品名との間に隙間 */
+        }
+
+        /* 説明文 (おんちゃセット用) のスタイル */
+        .menu-item p.description {
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: #555;
+            flex-basis: 100%; /* 幅を100%にして改行させる */
+            margin-top: 5px; /* 上の商品名との隙間 */
+            padding-left: 0; /* 左の余白をリセット */
+            white-space: normal; /* こちらは改行を許可 */
+        }
+
+        /* 5. お店について・アクセス */
+        #about, #access {
+            text-align: center;
+        }
+
+        /* 6. フッター */
+        #customer-view footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+
+        /* 秘密のスイッチのためのカーソル変更 */
+        #credit-footer {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        /* ▲▲▲ style.cssの内容 ここまで ▲▲▲ */
+
+
+        /* ▼▼▼ 店員さんビューのスタイルをここに追加 ▼▼▼ */
+        
+        /* --- 店員さんビュー --- */
+        
+        /* #staff-viewにスタイルを上書き */
+        div#staff-view.container {
+            display: none; /* 初期状態では非表示 */
+            text-align: left;
+            
+            /* style.cssの.container(max-width: 1000px)を上書き */
+            max-width: 600px; 
+            
+            /* style.cssのbodyスタイルを上書き */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', 'Noto Sans CJK JP', sans-serif;
+            background-color: #fff;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin: 20px auto; /* 中央揃え */
+        }
+        
+        /* 店員ビューのヘッダー */
+        #staff-view h1 {
+            text-align: center;
+            color: #d9534f;
+            border-bottom: 2px solid #d9534f;
+            margin-top: 0;
+            font-family: 'Hiragino Sans', sans-serif; /* フォントを戻す */
+        }
+        
+        /* タブ切り替え */
+        .staff-nav {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .nav-tab {
+            flex: 1;
+            padding: 12px 10px;
+            font-size: 1.1em;
+            font-weight: 700;
+            text-align: center;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            cursor: pointer;
+        }
+        .nav-tab.active {
+            background-color: #fff;
+            border-bottom-color: #fff;
+        }
+        #order-tab {
+            border-radius: 8px 0 0 8px;
+            border-right: none;
+        }
+        #log-tab {
+            border-radius: 0 8px 8px 0;
+        }
+        
+        /* ページコンテナ */
+        .staff-page {
+            display: none; /* 初期状態は非表示 */
+        }
+        .staff-page.active {
+            display: block; /* アクティブなページのみ表示 */
+        }
+
+        /* オーダーページ */
+        /* .menu-itemとの競合を避けるため、より詳細なセレクタに変更 */
+        #order-form .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10px;
+            border-bottom: 1px solid #eee;
+            background: #fff; /* 念のため指定 */
+        }
+        #order-form .order-item .item-name {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #333; /* 色を戻す */
+        }
+        .count-controls {
+            display: flex;
+            align-items: center;
+        }
+        .count-controls button {
+            width: 40px;
+            height: 40px;
+            font-size: 1.5em;
+            font-weight: 700;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .count-controls .count {
+            font-size: 1.4em;
+            font-weight: 700;
+            width: 50px;
+            text-align: center;
+        }
+        #total-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+        #total-price {
+            font-size: 2em;
+            font-weight: 700;
+            color: #333;
+            margin: 15px 0;
+        }
+        .order-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .order-buttons button {
+            flex: 1;
+            font-size: 1.1em;
+            padding: 15px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        #reset-button {
+            background-color: #f0ad4e; /* オレンジ */
+            color: #fff;
+        }
+        #confirm-button {
+            background-color: #5cb85c; /* 緑 */
+            color: #fff;
+        }
+
+        /* LOGページ */
+        #log-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+        .log-entry {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .log-time {
+            font-size: .9em;
+            color: #555;
+        }
+        .log-total {
+            font-size: 1.1em;
+            color: #d9534f;
+        }
+        .log-items {
+            list-style: none;
+            margin-left: -20px;
+            color: #444;
+            margin-top: 8px;
+            padding: 0;
+        }
+        
+        /* 店員ビューのフッター (顧客ビューのfooterと区別) */
+        footer#staff-footer {
+            background: #fff; /* 背景を戻す */
+            color: #333; /* 色を戻す */
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+        }
+        #back-to-customer {
+            font-size: 1em;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 700;
+            background-color: #5bc0de; /* 青 */
+            color: #fff;
+        }
+        /* ▲▲▲ 店員さんビュースタイル ここまで ▲▲▲ */
+        /* (スタイルは前回と同じなので省略) */
+        body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Noto Sans CJK JP","Yu Gothic",sans-serif;margin:0;padding:0;line-height:1.6;color:#333}.container{width:90%;max-width:1000px;margin:0 auto;padding:0 20px}#customer-view header{background:#fdfdfd;border-bottom:1px solid #eee;padding:10px 0}#customer-view header .container{display:flex;justify-content:space-between;align-items:center}.logo-img{height:50px;width:auto}#customer-view header nav ul{margin:0;padding:0;list-style:none}#customer-view header nav li{display:inline-block;margin-left:20px}#customer-view header nav a{text-decoration:none;color:#555;font-weight:700}.hero{background:#e6f0e6;padding:60px 0;text-align:center}.hero h2{font-size:36px;margin-bottom:10px;font-family:'Times New Roman',Times,serif}.section{padding:40px 0;border-bottom:1px solid #f0f0f0}.section h2{text-align:center;font-size:28px;margin-bottom:30px;color:#4a5c2f}.section h3{font-size:24px;color:#333;border-bottom:2px solid #e6f0e6;padding-bottom:5px;margin-bottom:20px}.menu-item{border:none;border-bottom:2px solid #e6f0e6;padding:15px 10px;background:#fff;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap}.menu-item h4{font-size:1.2rem;font-weight:600;color:#4a5c2f;margin:0;flex-shrink:0}.menu-item p{font-size:1.1rem;font-weight:700;color:#333;margin:0;white-space:nowrap;padding-left:10px}.menu-item p.description{font-size:.9rem;font-weight:400;color:#555;flex-basis:100%;margin-top:5px;padding-left:0;white-space:normal}#about,#access{text-align:center}#customer-view footer{background:#333;color:#fff;text-align:center;padding:20px 0;margin-top:30px}#credit-footer{cursor:pointer;user-select:none}div#staff-view.container{display:none;text-align:left;max-width:600px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Sans','Noto Sans CJK JP',sans-serif;background-color:#fff;padding:20px;line-height:1.6;color:#333;border:1px solid #ddd;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,.05);margin:20px auto}#staff-view h1{text-align:center;color:#d9534f;border-bottom:2px solid #d9534f;margin-top:0;font-family:'Hiragino Sans',sans-serif}.staff-nav{display:flex;margin-bottom:20px}.nav-tab{flex:1;padding:12px 10px;font-size:1.1em;font-weight:700;text-align:center;border:1px solid #ccc;background-color:#f9f9f9;cursor:pointer}.nav-tab.active{background-color:#fff;border-bottom-color:#fff}#order-tab{border-radius:8px 0 0 8px;border-right:none}#log-tab{border-radius:0 8px 8px 0}.staff-page{display:none}.staff-page.active{display:block}#order-form .order-item{display:flex;justify-content:space-between;align-items:center;padding:15px 10px;border-bottom:1px solid #eee;background:#fff}#order-form .order-item .item-name{font-size:1.1em;font-weight:700;color:#333}.count-controls{display:flex;align-items:center}.count-controls button{width:40px;height:40px;font-size:1.5em;font-weight:700;border:1px solid #ccc;border-radius:50%;background-color:#f9f9f9;cursor:pointer;line-height:1}.count-controls .count{font-size:1.4em;font-weight:700;width:50px;text-align:center}#total-section{margin-top:30px;text-align:center}#total-price{font-size:2em;font-weight:700;color:#333;margin:15px 0}.order-buttons{display:flex;justify-content:space-between;gap:10px;margin-top:20px}.order-buttons button{flex:1;font-size:1.1em;padding:15px 10px;border:none;border-radius:5px;cursor:pointer;font-weight:700}#reset-button{background-color:#f0ad4e;color:#fff}#confirm-button{background-color:#5cb85c;color:#fff}#log-container{max-height:400px;overflow-y:auto;border:1px solid #eee;border-radius:5px}.log-entry{padding:15px;border-bottom:1px solid #ddd}.log-entry:last-child{border-bottom:none}.log-header{display:flex;justify-content:space-between;font-weight:700;margin-bottom:10px}.log-time{font-size:.9em;color:#555}.log-total{font-size:1.1em;color:#d9534f}.log-items{list-style:none;margin-left:-20px;color:#444;margin-top:8px;padding:0}footer#staff-footer{background:#fff;color:#333;text-align:center;padding:20px 0;margin-top:30px}#back-to-customer{font-size:1em;padding:12px 20px;border:none;border-radius:5px;cursor:pointer;font-weight:700;background-color:#5bc0de;color:#fff}
+    </style>
+</head>
+<body>
+
+    <div id="customer-view">
+        <header>
+            <div class="container">
+                <a href="#"><img src="https://cdn.discordapp.com/attachments/1181206556193329204/1430417826119684106/IMG_0105.png?ex=68f9b3e9&is=68f86269&hm=a6b408007ee7fa235aeb9fc784f1297652815712fe13c2b3fdd986bcd87da7fb&" alt="おんちゃ処 ロゴ" class="logo-img"></a>
+                <nav>
+                    <ul>
+                        <li><a href="#menu">お品書き</a></li>
+                        <li><a href="#about">お店について</a></li>
+                        <li><a href="#access">アクセス</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <section class="hero">
+            <div class="container">
+                <h2>A little luxury for your everyday</h2>
+                <p>おんちゃ処へようこそ。</p>
+                <img src="https://cdn.discordapp.com/attachments/1181206556193329204/1430417826119684106/IMG_0105.png?ex=68f9b3e9&is=68f86269&hm=a6b408007ee7fa235aeb9fc784f1297652815712fe13c2b3fdd986bcd87da7fb&" alt="おんちゃ処 メインイメージ" style="max-width: 100%; height: auto; border-radius: 8px; margin-top: 20px;">
+            </div>
+        </section>
+
+        <section id="menu" class="container section">
+            <h2>お品書き (MENU)</h2>
+            
+            <h3>Food</h3>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <h4>★ おんちゃセット</h4>
+                    <p>¥500</p>
+                    <p class="description">団子3種 + 100円ドリンク</p> </div>
+                <div class="menu-item">
+                    <h4>きな粉</h4>
+                    <p>¥150</p>
+                </div>
+                <div class="menu-item">
+                    <h4>みたらし</h4>
+                    <p>¥150</p>
+                </div>
+                <div class="menu-item">
+                    <h4>つぶあん</h4>
+                    <p>¥150</p>
+                </div>
+                <div class="menu-item">
+                    <h4>こしあん</h4>
+                    <p>¥150</p>
+                </div>
+                <div class="menu-item">
+                    <h4>のり醤油</h4>
+                    <p>¥150</p>
+                </div>
+                <div class="menu-item">
+                    <h4>あんこ増量</h4>
+                    <p>¥20</p>
+                </div>
+                <div class="menu-item">
+                    <h4>きな粉増量</h4>
+                    <p>¥20</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">Drink</h3>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <h4>緑茶</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>烏龍茶</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>水</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>コーラ</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>ソーダ</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>ジンジャーエール</h4>
+                    <p>¥100</p>
+                </div>
+                <div class="menu-item">
+                    <h4>ラムネ</h4>
+                    <p>¥150</p>
+                </div>
+            </div>
+            <p style="text-align: center; margin-top: 20px;">* 価格はすべて税込です</p>
+
+        </section>
+
+        <section id="about" class="container section">
+            <h2>お店について</h2>
+            <p style="text-align: center;">一杯のお茶がくれる、やすらぎのひととき。一口のお団子がくれる、小さな幸せ。「おんちゃ処」は、そんな「ささやかな贅沢」を大切にするお店です。忙しい日常を少しだけ忘れられるような、心温まる時間をお過ごしください。</p>
+        </section>
+
+        <section id="access" class="container section">
+            <h2>出店場所</h2>
+            <p style="text-align: center;">皆様のお越しをお待ちしております！</p>
+            <img src="https://media.discordapp.net/attachments/1181206556193329204/1430416379131072623/image.png?ex=68f9b290&is=68f86110&hm=1939ec9d2a5d8669054a44bfe5f295cc761fb5c7137d2ca4282f36e1805330ba&=&format=webp&quality=lossless&width=527&height=525" 
+                 alt="お店の場所" 
+                 style="width: 100%; max-width: 527px; display: block; margin: 0 auto; border-radius: 8px;">
+        </section>
+
+        <footer>
+            <div class="container">
+                <p id="credit-footer">&copy; 2025 おんちゃ処. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+    <div id="staff-view" class="container">
+        <header>
+            <h1>【店員用】管理パネル</h1>
+        </header>
+
+        <nav class="staff-nav">
+            <div id="order-tab" class="nav-tab active">オーダー</div>
+            <div id="log-tab" class="nav-tab">LOG (履歴)</div>
+        </nav>
+
+        <div id="order-page" class="staff-page active">
+            <main id="order-form"></main>
+            <footer id="total-section">
+                <div id="total-price">合計: ¥0</div>
+                <div class="order-buttons">
+                    <button id="reset-button">リセット</button>
+                    <button id="confirm-button">以上の内容で確定</button>
+                </div>
+            </footer>
+        </div>
+
+        <div id="log-page" class="staff-page">
+            <main id="log-container">
+                <p style="text-align: center; color: #888;">ログを読み込み中です...</p>
+            </main>
+        </div>
+
+        <footer id="staff-footer">
+            <button id="back-to-customer">客側表示に戻る</button>
+        </footer>
+    </div>
+
+
+    <script>
+        // ▼▼▼ ご指定のGASのURL（変更なし） ▼▼▼
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxQ2pUukX2ZPSXwa-IABIEqD7d3fFVYCnZQssWFNfkD6UGsPtP3XfTS4N7c7s7P2RFX/exec';
+        
+        // --- メニューデータ ---
+        const menuItems = {
+            'onset': ['おんちゃセット', 500],
+            'kinako': ['きな粉', 150],
+            'mitarashi': ['みたらし', 150],
+            'tsubuan': ['つぶあん', 150],
+            'koshian': ['こしあん', 150],
+            'nori': ['のり醤油', 150],
+            'anko_up': ['あんこ増量', 20],
+            'kinako_up': ['きな粉増量', 20],
+            'ryokucha': ['緑茶', 100],
+            'oolong': ['烏龍茶', 100],
+            'water': ['水', 100],
+            'cola': ['コーラ', 100],
+            'soda': ['ソーダ', 100],
+            'ginger': ['ジンジャーエール', 100],
+            'ramune': ['ラムネ', 150]
+        };
+
+        // 注文数を保持するオブジェクト
+        let currentOrder = {};
+
+        // --- DOM要素の取得 ---
+        const customerView = document.getElementById('customer-view');
+        const staffView = document.getElementById('staff-view');
+        const creditFooter = document.getElementById('credit-footer');
+        const orderPage = document.getElementById('order-page');
+        const logPage = document.getElementById('log-page');
+        const orderTab = document.getElementById('order-tab');
+        const logTab = document.getElementById('log-tab');
+        const orderForm = document.getElementById('order-form');
+        const totalPriceEl = document.getElementById('total-price');
+        const logContainer = document.getElementById('log-container');
+        const resetButton = document.getElementById('reset-button');
+        const confirmButton = document.getElementById('confirm-button');
+        const backButton = document.getElementById('back-to-customer');
+
+        // --- オーダーフォームの初期化・リセット ---
+        function initializeOrderForm() {
+            orderForm.innerHTML = ''; 
+            currentOrder = {}; 
+
+            for (const id in menuItems) {
+                currentOrder[id] = 0; 
+                const item = menuItems[id];
+                const name = item[0];
+                
+                const el = document.createElement('div');
+                el.className = 'order-item'; // 店員ビュー専用のクラス
+                el.innerHTML = `
+                    <span class="item-name">${name}</span>
+                    <div class="count-controls">
+                        <button onclick="updateOrder('${id}', -1)">-</button>
+                        <span id="count-${id}" class="count">0</span>
+                        <button onclick="updateOrder('${id}', 1)">+</button>
+                    </div>
+                `;
+                orderForm.appendChild(el);
+            }
+            updateTotal();
+        }
+
+        // --- 注文数の更新 ---
+        window.updateOrder = function(id, change) {
+            const newCount = currentOrder[id] + change;
+            if (newCount >= 0) { 
+                currentOrder[id] = newCount;
+                document.getElementById(`count-${id}`).innerText = newCount;
+                updateTotal();
+            }
+        }
+        
+        // --- 合計金額の計算 ---
+        function calculateTotal() {
+            let total = 0;
+            for (const id in currentOrder) {
+                const price = menuItems[id][1];
+                total += currentOrder[id] * price;
+            }
+            return total;
+        }
+
+        // --- 合計金額の表示更新 ---
+        function updateTotal() {
+            const total = calculateTotal();
+            totalPriceEl.innerText = `合計: ¥${total}`;
+        }
+
+        // --- LOGページの描画 (GASから読み込み) ---
+        async function loadAndRenderLog() {
+            logContainer.innerHTML = '<p style="text-align: center; color: #888;">ログを読み込み中です...</p>';
+            
+            try {
+                // GETリクエストでログを取得
+                const response = await fetch(GAS_WEB_APP_URL);
+                const result = await response.json();
+
+                if (result.status !== 'success') {
+                    throw new Error(result.message || 'ログの読み込みに失敗しました。');
+                }
+
+                const logs = result.data;
+
+                if (logs.length === 0) {
+                    logContainer.innerHTML = '<p style="text-align: center; color: #888;">まだ確定された注文はありません。</p>';
+                    return;
+                }
+                
+                logContainer.innerHTML = ''; // ログコンテナをクリア
+                
+                logs.forEach(log => {
+                    const logEl = document.createElement('div');
+                    logEl.className = 'log-entry';
+                    
+                    logEl.innerHTML = `
+                        <div class="log-header">
+                            <span class="log-time">${log.timestamp}</span>
+                            <span class="log-total">合計: ¥${log.total}</span>
+                        </div>
+                        <ul class="log-items">
+                            <li>${log.itemsSummary.replace(/, /g, '</li><li>')}</li>
+                        </ul>
+                    `;
+                    logContainer.appendChild(logEl);
+                });
+
+            } catch (error) {
+                console.error('Error loading log:', error);
+                logContainer.innerHTML = `<p style="text-align: center; color: red;">エラー: ${error.message} (GASのURL、デプロイ、シート名「LOG」を確認してください)</p>`;
+            }
+        }
+        
+        // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+        // --- 秘密の操作（合言葉認証を追加） ---
+        // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
+        let clickCount = 0;
+        creditFooter.addEventListener('click', () => {
+            clickCount++;
+            
+            // 5回クリックでプロンプト表示
+            if (clickCount >= 5) {
+                
+                // 1. 合言葉の質問を表示
+                const userInput = prompt('【合言葉】\nおんちゃの有名なコラ画像は？');
+                
+                // 2. 正解のリスト
+                const passwords = ['おんざはーる', 'オンザハール', 'オントッツォ', 'おんトッツォ'];
+
+                if (userInput === null) {
+                    // キャンセルが押された場合
+                    clickCount = 0; // カウンターリセット
+                } else if (passwords.includes(userInput)) {
+                    // 3. 正解の場合
+                    customerView.style.display = 'none';
+                    staffView.style.display = 'block';
+                    clickCount = 0; // カウンターをリセット
+                    // 店員ビュー表示時にログを読み込む
+                    loadAndRenderLog();
+                } else {
+                    // 4. 不正解の場合
+                    alert('お前さんは誰や');
+                    clickCount = 0; // カウンターリセット
+                }
+                
+            }
+            
+            // クリックが途切れたらリセット（3秒以内）
+            setTimeout(() => {
+                clickCount = 0;
+            }, 3000);
+        });
+        // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+
+        // --- イベントリスナーの設定 ---
+        
+        // リセットボタン
+        resetButton.addEventListener('click', () => {
+            if (confirm('現在のオーダーをリセットしますか？ (LOGには残りません)')) {
+                initializeOrderForm();
+            }
+        });
+        
+        // 確定ボタン (GASへ送信)
+        confirmButton.addEventListener('click', async () => {
+            const total = calculateTotal();
+            if (total === 0) {
+                alert('商品が選択されていません。');
+                return;
+            }
+            
+            if (!confirm(`合計 ¥${total} で確定し、LOGに記録しますか？`)) {
+                return;
+            }
+
+            // ログに送信するデータを作成
+            let itemsToLog = [];
+            for (const id in currentOrder) {
+                if (currentOrder[id] > 0) {
+                    itemsToLog.push(`${menuItems[id][0]} x ${currentOrder[id]}`);
+                }
+            }
+            
+            // スプレッドシートのB列に入れるための単一の文字列
+            const itemsSummary = itemsToLog.join(', ');
+            
+            // タイムスタンプ
+            const now = new Date();
+            const timestamp = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+            
+            const dataToPost = {
+                timestamp: timestamp,
+                itemsSummary: itemsSummary,
+                total: total
+            };
+
+            // ボタンを無効化（二重送信防止）
+            confirmButton.disabled = true;
+            confirmButton.innerText = '送信中...';
+
+            try {
+                // POSTリクエストでログを送信
+                const response = await fetch(GAS_WEB_APP_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // 'no-cors'モード
+                    cache: 'no-cache',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    redirect: 'follow', 
+                    body: JSON.stringify(dataToPost) 
+                });
+                
+                // 'no-cors'モードではレスポンスの中身は確認できないが、
+                // リクエストは送信されていると期待する
+                
+                alert('ログに記録しました！');
+                
+                // オーダーフォームをリセット
+                initializeOrderForm();
+                
+                // LOGタブをアクティブにして更新
+                showTab('log');
+                loadAndRenderLog();
+
+            } catch (error) {
+                console.error('Error posting log:', error);
+                alert(`エラーが発生しました: ${error.message} (スプレッドシートの共有設定が「編集者」になっているか確認してください)`);
+            } finally {
+                // ボタンを有効に戻す
+                confirmButton.disabled = false;
+                confirmButton.innerText = '以上の内容で確定';
+            }
+        });
+
+        // 戻るボタン
+        backButton.addEventListener('click', () => {
+            customerView.style.display = 'block';
+            staffView.style.display = 'none';
+        });
+        
+        // --- タブ切り替え ---
+        function showTab(pageToShow) {
+            if (pageToShow === 'order') {
+                orderPage.classList.add('active');
+                logPage.classList.remove('active');
+                orderTab.classList.add('active');
+                logTab.classList.remove('active');
+            } else {
+                orderPage.classList.remove('active');
+                logPage.classList.add('active');
+                orderTab.classList.remove('active');
+                logTab.classList.add('active');
+            }
+        }
+        
+        orderTab.addEventListener('click', () => showTab('order'));
+        logTab.addEventListener('click', () => {
+            showTab('log');
+            // ログタブがクリックされたら必ず最新のログを読み込む
+            loadAndRenderLog();
+        });
+
+
+        // --- 初期化実行 ---
+        initializeOrderForm();
+
+    </script>
+</body>
+</html>
