@@ -60,7 +60,18 @@
         #page-staff-order .order-item .item-name{font-size:1.1em;font-weight:700;color:#333}
         #page-staff-order #total-section{margin-top:30px;text-align:center}
         #page-staff-order #staff-total-price{font-size:1.8em;font-weight:700;color:#2f3b23;margin:15px 0}
-        #page-staff-order .order-buttons{display:flex;justify-content:space-between;gap:10px;margin-top:20px}
+        /* ▼▼▼ [修正] order-buttons のスタイルを調整して合計金額表示スペースを作る ▼▼▼ */
+        #page-staff-order .order-buttons{display:flex;justify-content:space-between; align-items: center; /* 中央揃え */ gap:10px;margin-top:20px}
+        /* ▲▲▲ 修正完了 ▲▲▲ */
+        /* ▼▼▼ [追加] ボタン横の合計金額表示用スタイル ▼▼▼ */
+        #staff-confirm-total-display {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #d9534f; /* 赤色で目立たせる */
+            flex-grow: 1; /* 空きスペースを埋める */
+            text-align: center; /* 中央揃え */
+        }
+        /* ▲▲▲ 追加完了 ▲▲▲ */
         #page-staff-log #log-container{max-height:400px;overflow-y:auto;border:1px solid #eee;border-radius:5px; background: #fdfdfd;}
         #page-staff-log .log-entry{padding:15px;border-bottom:1px solid #ddd}
         #page-staff-log .log-entry:last-child{border-bottom:none}
@@ -78,6 +89,15 @@
         .count-controls button{width:36px;height:36px;font-size:1.5em;font-weight:700;border:1px solid #ccc;border-radius:50%;background-color:#f9f9f9;cursor:pointer;line-height:1; transition: background 0.2s;}
         .count-controls button:hover { background-color: #eee; }
         .count-controls .count{font-size:1.2em;font-weight:700;width:40px;text-align:center}
+        
+        .staff-item-subtotal {
+            font-size: 0.9em;
+            color: #888;
+            margin-left: 10px; /* カウントコントロールとの間に余白 */
+            min-width: 60px; /* 幅を確保してガタつきを防ぐ */
+            text-align: right;
+            display: inline-block; /* 幅指定のため */
+        }
 
         /* --- ここから画像を使った新しいスタイル --- */
         #page-customer-top .hero {
@@ -272,14 +292,15 @@
 
         <div id="page-staff-order" class="staff-page-content active">
             <h3 id="staff-order-header" style="text-align: center; color: #d9534f; margin-top: 0; font-family: 'Noto Sans JP', sans-serif;"></h3>
+            
             <main id="staff-order-form"></main>
             <footer id="total-section">
                 <div id="staff-total-price">合計: ¥0</div>
                 <div class="order-buttons">
                     <button id="staff-reset-button">リセット</button>
-                    <button id="staff-confirm-button">以上の内容で確定 (LOG記録)</button>
+                    <span id="staff-confirm-total-display">合計: ¥0</span> <button id="staff-confirm-button">以上の内容で確定 (LOG記録)</button>
                 </div>
-            </footer>
+                </footer>
         </div>
 
         <div id="page-staff-log" class="staff-page-content">
@@ -323,9 +344,8 @@
         // 注文数を保持するオブジェクト
         let staffOrder = {};
         
-        // ▼▼▼ [修正] 手動オーダーのカウンターを「次の番号」を保持する変数に変更 ▼▼▼
-        let currentNextTicket = 1; // GASから取得した「次の整理券番号」を保持
-        // ▲▲▲ 修正完了 ▲▲▲
+        // 次の整理券番号を保持する変数
+        let currentNextTicket = 1; 
 
         // --- DOM要素の取得 (ページごと) ---
         const customerTopView = document.getElementById('page-customer-top');
@@ -343,10 +363,11 @@
         const staffConfirmButton = document.getElementById('staff-confirm-button');
         const logContainer = document.getElementById('log-container');
         const backToCustomerButton = document.getElementById('back-to-customer');
-
-        // ▼▼▼ [修正] 手動オーダーヘッダーのDOM ▼▼▼
         const staffOrderHeaderEl = document.getElementById('staff-order-header');
-        // ▲▲▲ 修正完了 ▲▲▲
+        
+        // ▼▼▼ [追加] ボタン横の合計金額表示用DOM要素 ▼▼▼
+        const staffConfirmTotalDisplayEl = document.getElementById('staff-confirm-total-display');
+        // ▲▲▲ 追加完了 ▲▲▲
 
         // --- ページ切り替え ---
         function showPage(pageId) {
@@ -357,34 +378,26 @@
             window.scrollTo(0, 0); // ページトップにスクロール
         }
 
-        // --- 共通: 注文サマリHTML生成 ---
-        function generateOrderSummary(order) {
-            let summaryHtml = '';
-            for (const id in order) {
-                if (order[id] > 0) {
-                    summaryHtml += `<li>${menuItems[id].name} <span>x ${order[id]}</span></li>`;
-                }
-            }
-            return summaryHtml;
-        }
-
         // --- 共通: 注文合計計算 ---
         function calculateTotal(order) {
             let total = 0;
             for (const id in order) {
-                const price = menuItems[id].price;
-                total += order[id] * price;
+                if(menuItems[id]) {
+                    const price = menuItems[id].price;
+                    total += order[id] * price;
+                } else {
+                    console.warn(`Menu item with id "${id}" not found.`);
+                }
             }
             return total;
         }
         
-        // ▼▼▼ [修正] 手動オーダーのヘッダー更新関数 ▼▼▼
+        // 手動オーダーのヘッダー更新関数
         function updateStaffOrderHeader() {
             if (staffOrderHeaderEl) {
                 staffOrderHeaderEl.innerText = `これは ${currentNextTicket} 人目のお客さんのオーダーです`;
             }
         }
-        // ▲▲▲ 修正完了 ▲▲▲
         
         // ==========================================
         // --- 店員手動フロー (5. 店員パネル) ---
@@ -400,37 +413,51 @@
                 const name = item.name;
                 
                 const el = document.createElement('div');
-                el.className = 'order-item'; // Keep specific class for staff order
+                el.className = 'order-item'; 
+                
                 el.innerHTML = `
                     <span class="item-name">${name}</span>
-                    <div class="count-controls">
-                        <button onclick="updateStaffOrder('${id}', -1)">-</button>
-                        <span id="staff-count-${id}" class="count">0</span>
-                        <button onclick="updateStaffOrder('${id}', 1)">+</button>
+                    <div style="display: flex; align-items: center;"> 
+                        <div class="count-controls">
+                            <button onclick="updateStaffOrder('${id}', -1)">-</button>
+                            <span id="staff-count-${id}" class="count">0</span>
+                            <button onclick="updateStaffOrder('${id}', 1)">+</button>
+                        </div>
+                        <span id="staff-subtotal-${id}" class="staff-item-subtotal">¥0</span> 
                     </div>
                 `;
                 staffOrderForm.appendChild(el);
             }
             updateStaffTotal();
-            
-            // ▼▼▼ [修正] フォーム初期化時にヘッダーも更新 ▼▼▼
             updateStaffOrderHeader();
-            // ▲▲▲ 修正完了 ▲▲▲
         }
 
         window.updateStaffOrder = function(id, change) {
-            const newCount = staffOrder[id] + change;
-            if (newCount >= 0) { 
+            const newCount = (staffOrder[id] || 0) + change; 
+            if (newCount >= 0 && menuItems[id]) { 
                 staffOrder[id] = newCount;
                 document.getElementById(`staff-count-${id}`).innerText = newCount;
+                
+                const subtotal = newCount * menuItems[id].price;
+                const subtotalEl = document.getElementById(`staff-subtotal-${id}`);
+                if (subtotalEl) {
+                    subtotalEl.innerText = `¥${subtotal}`;
+                }
+                
                 updateStaffTotal();
             }
         }
         
+        // ▼▼▼ [修正] updateStaffTotal でボタン横の合計も更新 ▼▼▼
         function updateStaffTotal() {
             const total = calculateTotal(staffOrder);
             staffTotalPriceEl.innerText = `合計: ¥${total}`;
+            // ボタン横の合計金額表示も更新
+            if (staffConfirmTotalDisplayEl) {
+                staffConfirmTotalDisplayEl.innerText = `合計: ¥${total}`;
+            }
         }
+        // ▲▲▲ 修正完了 ▲▲▲
         
         orderTab.addEventListener('click', () => {
             staffOrderPage.classList.add('active');
@@ -451,19 +478,15 @@
         // --- GAS (スプレッドシート連携) ---
         // ==========================================
 
-        // ▼▼▼ [追加] パネル開封時に「次の番号」だけを取得する関数 ▼▼▼
         async function fetchNextTicketAndUpdateHeader() {
             try {
-                // GETリクエスト（doGet）を呼ぶ
                 const response = await fetch(GAS_WEB_APP_URL);
                 if (!response.ok) throw new Error('Network error fetching next ticket');
                 
                 const result = await response.json();
                 if (result.status !== 'success') throw new Error(result.message);
                 
-                // GASから返された nextTicket をグローバル変数に保存
                 currentNextTicket = result.nextTicket; 
-                // ヘッダー表示を更新
                 updateStaffOrderHeader(); 
                 
             } catch (error) {
@@ -473,9 +496,7 @@
                 }
             }
         }
-        // ▲▲▲ 追加完了 ▲▲▲
 
-        // ▼▼▼ [修正] loadAndRenderLog でも「次の番号」を更新する ▼▼▼
         async function loadAndRenderLog() {
             logContainer.innerHTML = '<p style="text-align: center; color: #888;">ログを読み込み中です...</p>';
             try {
@@ -485,8 +506,7 @@
                 const result = await response.json();
                 if (result.status !== 'success') throw new Error(result.message);
                 
-                // LOGタブを開いたときも、念のため「次の番号」を同期する
-                currentNextTicket = result.nextTicket; 
+                currentNextTicket = result.nextTicket; // LOGタブを開いたときも次の番号を同期
                 
                 const logs = result.data;
                 if (logs.length === 0) {
@@ -520,13 +540,11 @@
                 logContainer.innerHTML = `<p style="text-align: center; color: red;">エラー: ${error.message} (GASのURL、デプロイ、シート名「LOG」を確認してください)</p>`;
             }
         }
-        // ▲▲▲ 修正完了 ▲▲▲
         
-        // --- (POST) 新規注文をLOG書き込み (action: 'create') ---
         async function logOrderToGAS(total, order) {
             let itemsToLog = [];
             for (const id in order) {
-                if (order[id] > 0) {
+                if (order[id] > 0 && menuItems[id]) { 
                     itemsToLog.push(`${menuItems[id].name} x ${order[id]}`);
                 }
             }
@@ -534,13 +552,13 @@
             
             const dataToPost = {
                 action: 'create',
-                isCustomerOrder: false, // 常に false (手動オーダー)
+                isCustomerOrder: false, 
                 itemsSummary: itemsSummary,
                 total: total
             };
 
             try {
-                staffConfirmButton.disabled = true; // ボタン無効化
+                staffConfirmButton.disabled = true; 
 
                 const response = await fetch(GAS_WEB_APP_URL, {
                     method: 'POST',
@@ -552,14 +570,14 @@
                 const result = await response.json(); 
                 if (result.status !== 'success') throw new Error(result.message);
                 
-                return result; // {status: 'success', ticket: 1, timestamp: '19:30:05'} を返す
+                return result; 
 
             } catch (error) {
                 console.error('Error posting log (create):', error);
                 alert(`ログの書き込みに失敗しました: ${error.message}`);
-                return null; // 失敗
+                return null; 
             } finally {
-                staffConfirmButton.disabled = false; // ボタン有効化
+                staffConfirmButton.disabled = false; 
             }
         }
         
@@ -567,9 +585,7 @@
         // --- イベントリスナー設定 ---
         // ==========================================
         
-        // --- 店員パネル (秘密の操作) ---
         let clickCount = 0;
-        // ▼▼▼ [修正] パネルを開く前に、次の番号を取得する ▼▼▼
         creditFooter.addEventListener('click', async () => {
             clickCount++;
             if (clickCount >= 3) { 
@@ -577,9 +593,7 @@
                 clickCount = 0; 
                 
                 if (PASSWORDS.includes(userInput)) {
-                    // パネルを開く前に、GASから最新の「次の番号」を取得
                     await fetchNextTicketAndUpdateHeader(); 
-                    
                     initializeStaffOrderForm(); 
                     showPage('page-staff-panel');
                     staffOrderPage.classList.add('active');
@@ -592,12 +606,10 @@
             }
             setTimeout(() => { clickCount = 0; }, 2000); 
         });
-        // ▲▲▲ 修正完了 ▲▲▲
         
-        // --- 店員パネル (手動オーダー) ---
         staffResetButton.addEventListener('click', () => {
             if (confirm('現在のオーダーをリセットしますか？')) {
-                initializeStaffOrderForm(); // フォームはリセットされるが、カウンターは維持される
+                initializeStaffOrderForm(); 
             }
         });
         
@@ -607,28 +619,23 @@
                 alert('商品が選択されていません。');
                 return;
             }
-            if (!confirm(`合計 ¥${total} で確定し、LOGに記録しますか？\n(この注文は「手動」として「受取済」で即時記録されます)`)) {
+            if (!confirm(`合計 ¥${total} で確定し、LOGに記録しますか？\n(整理券番号 ${currentNextTicket} として記録されます)`)) {
                 return;
             }
             
             const result = await logOrderToGAS(total, staffOrder);
             
             if (result && result.status === 'success') {
-                alert('ログに記録しました。');
-                
-                // ▼▼▼ [修正] 確定したらカウンターを+1し、フォームを初期化(ヘッダーも更新) ▼▼▼
-                currentNextTicket++; // ブラウザ側の番号を+1
+                alert(`ログに記録しました (整理券番号: ${result.ticket})`);
+                currentNextTicket++; 
                 initializeStaffOrderForm(); 
-                // ▲▲▲ 修正完了 ▲▲▲
             }
         });
         
-        // --- 店員パネル (戻るボタン) ---
         backToCustomerButton.addEventListener('click', () => {
             showPage('page-customer-top');
         });
 
-        // --- BGM再生 & アニメーション ---
         document.addEventListener('DOMContentLoaded', () => {
             const logoTrigger = document.getElementById('logo-image-trigger');
             if (logoTrigger) { 
@@ -639,10 +646,9 @@
                     }
                 }, { once: true }); 
             } else {
-                console.error("Logo image trigger not found!"); // デバッグ用
+                console.error("Logo image trigger not found!"); 
             }
 
-            // フェードインアニメーション
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -656,7 +662,6 @@
                 observer.observe(el);
             });
 
-            // --- 画像フォールバック処理 (png→jpg の順で存在するファイルを選ぶ) ---
             function tryLoadImage(src) {
                 return new Promise((resolve, reject) => {
                     const img = new Image();
@@ -673,7 +678,6 @@
             }
 
             (async () => {
-                // hero 背景: haikei.jpg -> image3.png -> image3.jpg
                 const hero = document.querySelector('.hero');
                 if (hero) {
                     const heroSrc = await firstAvailable(['haikei.jpg', 'image3.png','image3.jpg']);
@@ -685,19 +689,16 @@
                     }
                 }
 
-                // menu-static 背景: gakkou.jpg -> image1.png -> image1.jpg
                 const menuStatic = document.getElementById('menu-static');
                 if (menuStatic) {
                     const menuSrc = await firstAvailable(['gakkou.jpg', 'image1.png','image1.jpg']);
                     if (menuSrc) {
-                        // JSで背景画像のみ設定（CSS側でオーバーレイを制御）
                         menuStatic.style.backgroundImage = `url('${menuSrc}')`;
                     } else {
                         console.warn('menu-static background: gakkou.jpg/image1.png/jpg が見つかりません');
                     }
                 }
 
-                // dango イラスト: dango.jpg -> image2.png -> image2.jpg
                 const dango = document.querySelector('.dango-illustration');
                 if (dango) {
                     const dangoSrc = await firstAvailable(['dango.jpg', 'image2.png','image2.jpg']);
@@ -705,7 +706,6 @@
                     else console.warn('dango illustration: dango.jpg/image2.png/jpg が見つかりません');
                 }
 
-                // 出店場所の画像: basyo.png -> basyo.jpg
                 const locationImg = document.querySelector('#location img');
                 if (locationImg) {
                     const locSrc = await firstAvailable(['basyo.png', 'basyo.jpg']);
