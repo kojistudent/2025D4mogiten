@@ -44,7 +44,7 @@
         #page-customer-top .menu-item h4{font-size:1.1rem;font-weight:700;color:#2f3b23;margin:0;flex-shrink:0}
         #page-customer-top .menu-item p{font-size:1.1rem;font-weight:500;color:#333;margin:0;white-space:nowrap;padding-left:10px}
         #page-customer-top .menu-item p.description{font-size:.9rem;font-weight:400;color:#555;flex-basis:100%;margin-top:5px;padding-left:0;white-space:normal}
-        #page-customer-top #about p, #page-customer-top #location p { font-size: 1.1em; max-width: 600px; margin-left: auto; margin-right: auto;} /* IDをaccessからlocationに変更 */
+        #page-customer-top #about p, #page-customer-top #location p, #page-customer-top #ad-katenji p { /* ad-katenji p を追加 */ font-size: 1.1em; max-width: 600px; margin-left: auto; margin-right: auto; text-align: center;}
         #page-customer-top footer p#credit-footer{cursor:pointer;user-select:none; color: #ccc;} /* Visible on dark footer */
         
         div#page-staff-panel.container{text-align:left;max-width:600px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Sans','Noto Sans CJK JP',sans-serif;background-color:#fff;padding:20px;line-height:1.6;color:#333;border:1px solid #ddd;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,.05);margin:20px auto}
@@ -60,18 +60,14 @@
         #page-staff-order .order-item .item-name{font-size:1.1em;font-weight:700;color:#333}
         #page-staff-order #total-section{margin-top:30px;text-align:center}
         #page-staff-order #staff-total-price{font-size:1.8em;font-weight:700;color:#2f3b23;margin:15px 0}
-        /* ▼▼▼ [修正] order-buttons のスタイルを調整して合計金額表示スペースを作る ▼▼▼ */
-        #page-staff-order .order-buttons{display:flex;justify-content:space-between; align-items: center; /* 中央揃え */ gap:10px;margin-top:20px}
-        /* ▲▲▲ 修正完了 ▲▲▲ */
-        /* ▼▼▼ [追加] ボタン横の合計金額表示用スタイル ▼▼▼ */
+        .order-buttons{display:flex;justify-content:space-between; align-items: center; gap:10px;margin-top:20px}
         #staff-confirm-total-display {
             font-size: 1.1em;
             font-weight: 700;
-            color: #d9534f; /* 赤色で目立たせる */
-            flex-grow: 1; /* 空きスペースを埋める */
-            text-align: center; /* 中央揃え */
+            color: #d9534f; 
+            flex-grow: 1; 
+            text-align: center; 
         }
-        /* ▲▲▲ 追加完了 ▲▲▲ */
         #page-staff-log #log-container{max-height:400px;overflow-y:auto;border:1px solid #eee;border-radius:5px; background: #fdfdfd;}
         #page-staff-log .log-entry{padding:15px;border-bottom:1px solid #ddd}
         #page-staff-log .log-entry:last-child{border-bottom:none}
@@ -93,98 +89,94 @@
         .staff-item-subtotal {
             font-size: 0.9em;
             color: #888;
-            margin-left: 10px; /* カウントコントロールとの間に余白 */
-            min-width: 60px; /* 幅を確保してガタつきを防ぐ */
+            margin-left: 10px; 
+            min-width: 60px; 
             text-align: right;
-            display: inline-block; /* 幅指定のため */
+            display: inline-block; 
         }
 
         /* --- ここから画像を使った新しいスタイル --- */
         #page-customer-top .hero {
             position: relative;
-            padding: 100px 0; /* 高さを確保 */
-            color: #fff; /* テキストを白に */
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6); /* テキストの視認性向上 */
-            background: #4a5c2f; /* JSが読み込まれるまでの仮の背景色 */
+            padding: 100px 0; 
+            color: #fff; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6); 
+            background: #4a5c2f; 
             background-size: cover;
-            border-radius: 8px; /* 角を丸く */
-            margin: 20px auto; /* 中央寄せと余白 */
+            border-radius: 8px; 
+            margin: 20px auto; 
             text-align: center;
-            overflow: hidden; /* 角丸を適用するため */
+            overflow: hidden; 
         }
 
-        #page-customer-top .hero::before { /* 薄いテクスチャを追加 */
+        #page-customer-top .hero::before { 
             content: "";
             position: absolute;
             inset: 0;
-            background-image: url('https://www.transparenttextures.com/patterns/fabric-of-squares.png'); /* 別のテクスチャを試す */
+            background-image: url('https://www.transparenttextures.com/patterns/fabric-of-squares.png'); 
             opacity: 0.1;
             z-index: 1;
         }
 
         #page-customer-top .hero .container {
             position: relative;
-            z-index: 2; /* テキストを画像の上に */
+            z-index: 2; 
         }
         
         #page-customer-top .hero h2 {
-            font-size: 3em; /* より大きく */
-            color: #d7ffb8; /* ヒーローの文字色を明るい抹茶色に変更 */
+            font-size: 3em; 
+            color: #d7ffb8; 
             margin-bottom: 20px;
             font-family: 'Shippori Mincho', serif;
             letter-spacing: 0.08em;
         }
         #page-customer-top .hero p {
             font-size: 1.2em;
-            color: #d7ffb8; /* ヒーローの文字色を明るい抹茶色に変更 */
+            color: #d7ffb8; 
             max-width: 700px;
             margin: 0 auto;
         }
 
-        /* お品書きセクションのスタイルを「::before オーバーレイ」方式に統一 */
         #menu-static {
-            /* background-image はJSで設定 */
             background-size: cover;
             background-position: center center;
             padding: 50px 20px;
             margin-top: 40px;
-            position: relative; /* 重ね合わせのため */
-            overflow: hidden; /* 角丸を適用するため */
+            position: relative; 
+            overflow: hidden; 
         }
 
-        #menu-static::before { /* テキストが読みやすいようにオーバーレイ */
+        #menu-static::before { 
             content: "";
             position: absolute;
             inset: 0;
-            background-color: rgba(255, 255, 255, 0.85); /* 白の半透明オーバーレイ (少し濃く) */
+            background-color: rgba(255, 255, 255, 0.85); 
             z-index: 0;
         }
 
         #menu-static .section-title,
         #menu-static h3,
-        #menu-static .menu-grid, /* .menu-itemの親もz-indexを適用 */
-        #menu-static .dango-illustration, /* 団子画像もz-indexを適用 */
+        #menu-static .menu-grid, 
+        #menu-static .dango-illustration, 
         #menu-static p {
-            position: relative; /* オーバーレイより手前に */
+            position: relative; 
             z-index: 1;
         }
 
-        /* 団子の画像を挿入 */
         .dango-illustration {
-            width: 80%; /* 幅を調整 */
-            max-width: 400px; /* 最大幅 */
+            width: 80%; 
+            max-width: 400px; 
             display: block;
-            margin: 30px auto; /* 中央寄せ */
+            margin: 30px auto; 
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.1)); /* ぼんやりとした影 */
-            opacity: 0.9; /* 少し透明度 */
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.1)); 
+            opacity: 0.9; 
         }
 
-        /* 店舗についてのセクションに、より落ち着いた背景を追加 */
         #about {
-            background-color: #f7f3ed; /* 少し温かみのある白 */
-            border-left: 5px solid #a79e8f; /* アクセントライン */
+            background-color: #f7f3ed; 
+            border-left: 5px solid #a79e8f; 
             padding: 40px 30px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.03);
         }
@@ -194,14 +186,114 @@
             line-height: 2;
         }
 
-        /* 出店場所セクションの画像をより目立たせる */
         #location img {
-            border: 5px solid #fff; /* 白い枠線 */
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* 強めの影 */
+            border: 5px solid #fff; 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
             transition: transform 0.3s ease;
         }
         #location img:hover {
-            transform: scale(1.02); /* ホバーで少し拡大 */
+            transform: scale(1.02); 
+        }
+
+        /* ▼▼▼ [追加] 広告セクションのスタイル ▼▼▼ */
+        #ad-katenji img {
+            max-width: 80%; /* 幅を調整 */
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: opacity 0.3s ease;
+        }
+         #ad-katenji a:hover img {
+            opacity: 0.8; /* ホバー時に少し透明にする */
+        }
+        /* ▲▲▲ 追加完了 ▲▲▲ */
+
+        /* ポップアップ広告のスタイル */
+        .ad-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* 半透明のオーバーレイ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0; /* 最初は非表示 */
+            visibility: hidden; /* スクリーンリーダーからも隠す */
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .ad-popup-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .ad-popup {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 380px; /* LINE広告の画像に合わせた幅 */
+            padding: 20px;
+            box-sizing: border-box;
+            position: relative;
+            transform: translateX(100%); /* 右からスライドイン */
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* スライドアニメーション */
+            text-align: center;
+        }
+
+        .ad-popup-overlay.visible .ad-popup {
+            transform: translateX(0); /* 表示時に元の位置へ */
+        }
+
+        .ad-popup .close-button {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.8em;
+            color: #888;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 0;
+            line-height: 1;
+        }
+        .ad-popup .close-button:hover {
+            color: #333;
+        }
+
+        .ad-popup img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .ad-popup p {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .ad-popup .ad-button {
+            background-color: #ff7f00 !important; /* オレンジ色 */
+            color: #fff !important;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: 700;
+            border-radius: 8px;
+            text-decoration: none;
+            display: block; /* ボタンを幅いっぱいに */
+            width: calc(100% - 40px); /* paddingを考慮 */
+            margin: 0 auto; /* 中央寄せ */
+        }
+        .ad-popup .ad-button:hover {
+            background-color: #e66a00 !important;
         }
 
     </style>
@@ -219,7 +311,8 @@
                         <li><a href="#menu-static">お品書き</a></li>
                         <li><a href="#about">お店について</a></li>
                         <li><a href="#location">出店場所</a></li>
-                    </ul>
+                        <li><a href="#ad-katenji">展示広告</a></li>
+                        </ul>
                 </nav>
             </div>
         </header>
@@ -272,6 +365,14 @@
                  alt="出店場所" style="width: 100%; max-width: 527px; display: block; margin: 20px auto; border-radius: 8px;">
         </section>
 
+        <section id="ad-katenji" class="container section fade-in card"> 
+            <h2 class="section-title">電子工学科 展示広告</h2>
+            <p>ぜひ電子工学科の展示もご覧ください！</p>
+            <a href="https://60-d4.github.io/katenji/" target="_blank">
+                <img src="katenji.jpg" id="katenji-ad-image" alt="電子工学科展示 広告画像">
+            </a>
+            <p><a href="https://60-d4.github.io/katenji/" target="_blank" class="btn" style="background-color: #ff7f00 !important;">詳細はこちら</a></p>
+        </section>
         <footer>
             <div class="container">
                 <p id="credit-footer">&copy; 2025 おんちゃ処. All rights reserved.</p>
@@ -300,7 +401,7 @@
                     <button id="staff-reset-button">リセット</button>
                     <span id="staff-confirm-total-display">合計: ¥0</span> <button id="staff-confirm-button">以上の内容で確定 (LOG記録)</button>
                 </div>
-                </footer>
+            </footer>
         </div>
 
         <div id="page-staff-log" class="staff-page-content">
@@ -314,10 +415,19 @@
         </footer>
     </div>
 
-
+    <div id="ad-popup-overlay" class="ad-popup-overlay">
+        <div class="ad-popup">
+            <button class="close-button" aria-label="広告を閉じる">&times;</button>
+            <img src="katenji.png" alt="電子工学科展示広告">
+            <p>電子工学科展示</p>
+            <a href="https://60-d4.github.io/katenji/" target="_blank" class="ad-button">今すぐ資料を見る</a>
+        </div>
+    </div>
+    
     <script>
-        // ▼▼▼ ご指定のGASのURL（変更なし） ▼▼▼
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyh_xBtC7ZSfYuKJZuoKv8BsTJWpvTqC3vAhjoZ7qYvH3p9r8JFTqCi3092ktNJP3am/exec'; // ここを最新のURLに
+        // ▼▼▼ [修正] GASのURLを更新 ▼▼▼
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyh_xBtC7ZSfYuKJZuoKv8BsTJWpvTqC3vAhjoZ7qYvH3p9r8JFTqCi3092ktNJP3am/exec'; 
+        // ▲▲▲ 修正完了 ▲▲▲
         
         // --- 合言葉 ---
         const PASSWORDS = ['おんざはーる', 'オンザハール', 'オントッツォ', 'おんトッツォ'];
@@ -365,9 +475,12 @@
         const backToCustomerButton = document.getElementById('back-to-customer');
         const staffOrderHeaderEl = document.getElementById('staff-order-header');
         
-        // ▼▼▼ [追加] ボタン横の合計金額表示用DOM要素 ▼▼▼
         const staffConfirmTotalDisplayEl = document.getElementById('staff-confirm-total-display');
-        // ▲▲▲ 追加完了 ▲▲▲
+
+        const adPopupOverlay = document.getElementById('ad-popup-overlay');
+        const adPopupButton = document.querySelector('.ad-popup .ad-button');
+        const adPopupCloseButton = document.querySelector('.ad-popup .close-button');
+        const adPopupImage = document.querySelector('.ad-popup img');
 
         // --- ページ切り替え ---
         function showPage(pageId) {
@@ -375,7 +488,7 @@
                 page.classList.remove('active');
             });
             document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0, 0); // ページトップにスクロール
+            window.scrollTo(0, 0); 
         }
 
         // --- 共通: 注文合計計算 ---
@@ -448,16 +561,13 @@
             }
         }
         
-        // ▼▼▼ [修正] updateStaffTotal でボタン横の合計も更新 ▼▼▼
         function updateStaffTotal() {
             const total = calculateTotal(staffOrder);
             staffTotalPriceEl.innerText = `合計: ¥${total}`;
-            // ボタン横の合計金額表示も更新
             if (staffConfirmTotalDisplayEl) {
                 staffConfirmTotalDisplayEl.innerText = `合計: ¥${total}`;
             }
         }
-        // ▲▲▲ 修正完了 ▲▲▲
         
         orderTab.addEventListener('click', () => {
             staffOrderPage.classList.add('active');
@@ -506,7 +616,7 @@
                 const result = await response.json();
                 if (result.status !== 'success') throw new Error(result.message);
                 
-                currentNextTicket = result.nextTicket; // LOGタブを開いたときも次の番号を同期
+                currentNextTicket = result.nextTicket; 
                 
                 const logs = result.data;
                 if (logs.length === 0) {
@@ -514,7 +624,7 @@
                     return;
                 }
                 
-                logContainer.innerHTML = ''; // クリア
+                logContainer.innerHTML = ''; 
                 logs.forEach(log => {
                     const logEl = document.createElement('div');
                     logEl.className = 'log-entry';
@@ -677,6 +787,7 @@
                 return null;
             }
 
+            // ▼▼▼ [修正] 画像フォールバックに katenji を追加 ▼▼▼
             (async () => {
                 const hero = document.querySelector('.hero');
                 if (hero) {
@@ -712,12 +823,57 @@
                     if (locSrc) locationImg.src = locSrc;
                     else console.warn('location image: basyo.png/jpg が見つかりません');
                 }
+
+                // 電子工学科広告画像: katenji.jpg -> katenji.png
+                const katenjiAdImg = document.getElementById('katenji-ad-image');
+                if(katenjiAdImg) {
+                    const katenjiSrc = await firstAvailable(['katenji.jpg', 'katenji.png']);
+                    if (katenjiSrc) katenjiAdImg.src = katenjiSrc;
+                    else console.warn('katenji ad image: katenji.jpg/png が見つかりません');
+                }
+
+                // ポップアップ広告画像: katenji.png -> katenji.jpg
+                if(adPopupImage) {
+                    const popupSrc = await firstAvailable(['katenji.png', 'katenji.jpg']);
+                     if (popupSrc) adPopupImage.src = popupSrc;
+                    else console.warn('popup ad image: katenji.png/jpg が見つかりません');
+                }
             })();
+            // ▲▲▲ 修正完了 ▲▲▲
+
+            // ポップアップ広告の表示ロジック
+            const AD_DISPLAYED_KEY = 'adDisplayed'; 
+
+            function showAdPopup() {
+                // if (localStorage.getItem(AD_DISPLAYED_KEY)) {
+                //     return;
+                // }
+
+                setTimeout(() => {
+                    adPopupOverlay.classList.add('visible');
+                }, 1000); 
+            }
+
+            function hideAdPopup() {
+                adPopupOverlay.classList.remove('visible');
+                // localStorage.setItem(AD_DISPLAYED_KEY, 'true'); 
+            }
+
+            if (adPopupCloseButton) {
+                adPopupCloseButton.addEventListener('click', hideAdPopup);
+            }
+            if (adPopupButton) {
+                 adPopupButton.addEventListener('click', (event) => {
+                    hideAdPopup(); 
+                });
+            }
+            
+            showAdPopup(); 
 
         });
 
         // --- 初期化実行 ---
-        showPage('page-customer-top'); // 最初に表示するページ
+        showPage('page-customer-top'); 
 
     </script>
 </body>
