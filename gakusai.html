@@ -16,21 +16,11 @@
         h1, h2, h3, h4 { font-family: 'Shippori Mincho', serif; color: #2f3b23; }
         button, .btn, a.btn, input[type=button], input[type=submit] { background-color: #4a5c2f !important; color: #fff !important; border: none !important; border-radius: 6px; padding: 10px 20px; font-weight: 500; transition: background 0.3s ease, transform 0.2s ease; cursor: pointer; text-decoration: none; display: inline-block; text-align: center; }
         button:hover, .btn:hover, a.btn:hover, input[type=button]:hover, input[type=submit]:hover { background-color: #2f3b23 !important; transform: translateY(-2px); }
-        #goto-order-button { width: 80%; max-width: 400px; margin: 30px auto; padding: 20px; font-size: 1.5em;}
-        #cancel-customer-order-button { background-color: #aaa !important; margin-top: 10px; width: 100%; max-width: 400px;}
-        #cancel-customer-order-button:hover { background-color: #888 !important; }
-        #checkout-complete-button { background-color: #5cb85c !important; } /* ボタン名は会計完了だがIDはそのまま */
-        #checkout-complete-button:hover { background-color: #449d44 !important; }
-        #cancel-order-button { background-color: #f0ad4e !important; }
-        #cancel-order-button:hover { background-color: #ec971f !important; }
-        #pickup-button { background-color: #5bc0de !important; }
-        #pickup-button:hover { background-color: #31b0d5 !important; }
         #back-to-customer { background-color: #5bc0de !important; }
         #back-to-customer:hover { background-color: #31b0d5 !important; }
-        .card, .menu-item, .order-item, .box, #page-customer-top .container, #page-customer-order .container, #page-staff-confirm, #page-customer-receipt, #page-staff-panel { background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.04); transition: box-shadow 0.3s ease, transform 0.3s ease; margin-bottom: 20px; }
+        .card, .menu-item, .order-item, .box, #page-customer-top .container, #page-staff-panel { background: #fff; border: 1px solid #e8e8e8; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.04); transition: box-shadow 0.3s ease, transform 0.3s ease; margin-bottom: 20px; }
         .menu-item:hover, #page-staff-order .order-item:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.08); }
         .container { width: 90%; max-width: 1000px; margin: 0 auto; padding: 30px 20px; }
-        #page-staff-confirm, #page-customer-receipt { padding: 30px; max-width: 600px; margin: 40px auto; }
         #page-staff-panel { padding: 20px; max-width: 600px; margin: 20px auto; }
         .section-title { font-family: 'Shippori Mincho', serif; font-size: 1.8em; color: #2f3b23; text-align: center; margin: 40px 0 30px; position: relative; }
         .section-title::after { content: ""; display: block; width: 60px; height: 2px; background: #a79e8f; margin: 10px auto 0; }
@@ -41,7 +31,6 @@
         header { background-color: #ffffff; border-bottom: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,0.05); padding: 10px 0; }
         footer { background-color: #2f3b23; color: #fff; text-align: center; padding: 40px 20px; font-size: 0.9em; margin-top: 60px; border-top: 1px solid #ddd; }
         section { padding: 60px 0px; margin-bottom: 30px; }
-        .hero { padding: 60px 0; }
         .page{display:none;}.page.active{display:block;}
         #page-customer-top .container{width:90%;max-width:1000px;margin: 0 auto; padding: 0 20px;}
         #page-customer-top header .container{display:flex;justify-content:space-between;align-items:center; background: none; border: none; box-shadow: none; margin-bottom: 0;}
@@ -55,42 +44,9 @@
         #page-customer-top .menu-item h4{font-size:1.1rem;font-weight:700;color:#2f3b23;margin:0;flex-shrink:0}
         #page-customer-top .menu-item p{font-size:1.1rem;font-weight:500;color:#333;margin:0;white-space:nowrap;padding-left:10px}
         #page-customer-top .menu-item p.description{font-size:.9rem;font-weight:400;color:#555;flex-basis:100%;margin-top:5px;padding-left:0;white-space:normal}
-        #page-customer-top #about p, #page-customer-top #access p { font-size: 1.1em; max-width: 600px; margin-left: auto; margin-right: auto;}
-        /* ▼▼▼ [修正] フッター文字色を修正 ▼▼▼ */
+        #page-customer-top #about p, #page-customer-top #location p { font-size: 1.1em; max-width: 600px; margin-left: auto; margin-right: auto;} /* IDをaccessからlocationに変更 */
         #page-customer-top footer p#credit-footer{cursor:pointer;user-select:none; color: #ccc;} /* Visible on dark footer */
-        /* ▲▲▲ 修正完了 ▲▲▲ */
-        #page-customer-order .hero { padding: 30px 0; }
-        #page-customer-order .section { padding: 40px 0px; }
-        #page-customer-order .container { padding: 20px; background: none; border: none; box-shadow: none; margin-bottom: 0;} /* Reset card style */
-        #page-customer-order h3 {font-size:1.5em;color:#2f3b23;border-bottom:1px solid #eee;padding-bottom:10px;margin-bottom:25px}
-        #page-customer-order .menu-item{border-bottom:1px solid #eee;padding:20px 10px;background:#fff;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap; margin-bottom: 10px;}
-        #page-customer-order .menu-item-details h4{font-size:1.1rem;font-weight:700;color:#2f3b23;margin:0}
-        #page-customer-order .menu-item-details p.description{font-size:.9rem;font-weight:400;color:#555;margin-top:5px}
-        #page-customer-order .menu-item-controls p{font-size:1.1rem;font-weight:500;color:#333;margin:0;min-width:50px;text-align:right}
-        #page-customer-order #order-summary{background:#fff;border-top:1px solid #ddd;padding:20px;position:sticky;bottom:0;box-shadow:0 -2px 5px rgba(0,0,0,0.06);text-align:center}
-        #page-customer-order #customer-total-price{font-size:1.6em;font-weight:700;color:#2f3b23;margin:10px 0}
-        #page-staff-confirm h2,#page-customer-receipt h2{font-size:1.5em;color:#2f3b23;margin-top:0}
-        .order-summary-list{text-align:left;list-style:none;padding: 15px 0;margin:20px 0;border-top:1px solid #eee;border-bottom:1px solid #eee}
-        .order-summary-list li{padding:12px 5px;font-size:1.1em;border-bottom:1px dotted #ccc}
-        .order-summary-list li:last-child{border-bottom:none}
-        .order-summary-list span{float:right;font-weight:700}
-        #staff-confirm-total{font-size:1.6em;font-weight:700;color:#d9534f;margin:25px 0; display: flex; align-items: center; justify-content: center;}
-        #ticket-number{font-size:2em;font-weight:700;color:#d9534f;margin:25px 0}
-        /* ▼▼▼ [修正] タップエリアのスタイル調整 ▼▼▼ */
-         #staff-tap-area {
-            display: inline-block;
-            font-size: 1.2em; /* 少し小さく */
-            color: #ddd; /* さらに薄く */
-            cursor: pointer; user-select: none;
-            padding: 2px 6px; /* パディング縮小 */
-            margin-left: 8px; /* マージン縮小 */
-            line-height: 1;
-            border-radius: 3px; /* 少し丸める */
-            /* border と background は削除 */
-            transition: color 0.2s;
-        }
-         #staff-tap-area:hover { color: #aaa; } /* ホバー色変更 */
-         /* ▲▲▲ 修正完了 ▲▲▲ */
+        
         div#page-staff-panel.container{text-align:left;max-width:600px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Hiragino Sans','Noto Sans CJK JP',sans-serif;background-color:#fff;padding:20px;line-height:1.6;color:#333;border:1px solid #ddd;border-radius:8px;box-shadow:0 4px 10px rgba(0,0,0,.05);margin:20px auto}
         #page-staff-panel h1{text-align:center;color:#d9534f;border-bottom:2px solid #d9534f;margin-top:0;font-family:'Hiragino Sans',sans-serif}
         .staff-nav{display:flex;margin-bottom:20px}
@@ -123,22 +79,126 @@
         .count-controls button:hover { background-color: #eee; }
         .count-controls .count{font-size:1.2em;font-weight:700;width:40px;text-align:center}
 
+        /* --- ここから画像を使った新しいスタイル --- */
+        #page-customer-top .hero {
+            position: relative;
+            padding: 100px 0; /* 高さを確保 */
+            color: #fff; /* テキストを白に */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6); /* テキストの視認性向上 */
+            background: #4a5c2f; /* JSが読み込まれるまでの仮の背景色 */
+            background-size: cover;
+            border-radius: 8px; /* 角を丸く */
+            margin: 20px auto; /* 中央寄せと余白 */
+            text-align: center;
+            overflow: hidden; /* 角丸を適用するため */
+        }
+
+        #page-customer-top .hero::before { /* 薄いテクスチャを追加 */
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/fabric-of-squares.png'); /* 別のテクスチャを試す */
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        #page-customer-top .hero .container {
+            position: relative;
+            z-index: 2; /* テキストを画像の上に */
+        }
+        
+        #page-customer-top .hero h2 {
+            font-size: 3em; /* より大きく */
+            color: #d7ffb8; /* ヒーローの文字色を明るい抹茶色に変更 */
+            margin-bottom: 20px;
+            font-family: 'Shippori Mincho', serif;
+            letter-spacing: 0.08em;
+        }
+        #page-customer-top .hero p {
+            font-size: 1.2em;
+            color: #d7ffb8; /* ヒーローの文字色を明るい抹茶色に変更 */
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* お品書きセクションのスタイルを「::before オーバーレイ」方式に統一 */
+        #menu-static {
+            /* background-image はJSで設定 */
+            background-size: cover;
+            background-position: center center;
+            padding: 50px 20px;
+            margin-top: 40px;
+            position: relative; /* 重ね合わせのため */
+            overflow: hidden; /* 角丸を適用するため */
+        }
+
+        #menu-static::before { /* テキストが読みやすいようにオーバーレイ */
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-color: rgba(255, 255, 255, 0.85); /* 白の半透明オーバーレイ (少し濃く) */
+            z-index: 0;
+        }
+
+        #menu-static .section-title,
+        #menu-static h3,
+        #menu-static .menu-grid, /* .menu-itemの親もz-indexを適用 */
+        #menu-static .dango-illustration, /* 団子画像もz-indexを適用 */
+        #menu-static p {
+            position: relative; /* オーバーレイより手前に */
+            z-index: 1;
+        }
+
+        /* 団子の画像を挿入 */
+        .dango-illustration {
+            width: 80%; /* 幅を調整 */
+            max-width: 400px; /* 最大幅 */
+            display: block;
+            margin: 30px auto; /* 中央寄せ */
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.1)); /* ぼんやりとした影 */
+            opacity: 0.9; /* 少し透明度 */
+        }
+
+        /* 店舗についてのセクションに、より落ち着いた背景を追加 */
+        #about {
+            background-color: #f7f3ed; /* 少し温かみのある白 */
+            border-left: 5px solid #a79e8f; /* アクセントライン */
+            padding: 40px 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        #about p {
+            color: #555;
+            font-size: 1.05em;
+            line-height: 2;
+        }
+
+        /* 出店場所セクションの画像をより目立たせる */
+        #location img {
+            border: 5px solid #fff; /* 白い枠線 */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* 強めの影 */
+            transition: transform 0.3s ease;
+        }
+        #location img:hover {
+            transform: scale(1.02); /* ホバーで少し拡大 */
+        }
+
     </style>
 </head>
 <body>
 
-    <audio id="bgm" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9cfa08a8f7.mp3?filename=japanese-instrumental-ambient-11213.mp3" loop></audio>
+    <audio id="bgm" src="dango.mp3" loop></audio>
 
     <div id="page-customer-top" class="page active">
         <header>
             <div class="container">
-                <a href="#"><img id="logo-image-trigger" src="https://cdn.discordapp.com/attachments/1181206556193329204/1430417826119684106/IMG_0105.png?ex=68f9b3e9&is=68f86269&hm=a6b408007ee7fa235aeb9fc784f1297652815712fe13c2b3fdd986bcd87da7fb&" alt="おんちゃ処 ロゴ" class="logo-img"></a>
+                <a href="#"><img id="logo-image-trigger" src="ontyalog.png" alt="おんちゃ処 ロゴ" class="logo-img"></a>
                 <nav>
                     <ul>
                         <li><a href="#menu-static">お品書き</a></li>
                         <li><a href="#about">お店について</a></li>
-                        <li><a href="#access">アクセス</a></li>
-                        <li><a href="#receipt" id="goto-receipt-button" style="color:#d9534f;">整理券確認</a></li>
+                        <li><a href="#location">出店場所</a></li>
                     </ul>
                 </nav>
             </div>
@@ -147,14 +207,13 @@
         <section class="hero fade-in">
             <div class="container">
                 <h2>A little luxury for your everyday</h2>
-                <p>おんちゃ処へようこそ。</p>
-                <a href="#order" id="goto-order-button" class="btn">セルフオーダーはこちら</a>
+                <p>おんちゃ処へようこそ。毎日頑張るあなたに「ささやかな贅沢」をお届けします。</p>
             </div>
         </section>
 
         <section id="menu-static" class="container section fade-in card"> <h2 class="section-title">お品書き (MENU)</h2>
-            <h3>Food</h3>
             <div class="menu-grid">
+                <h3>Food</h3>
                 <div class="menu-item"><h4>★ おんちゃセット</h4><p>¥500</p><p class="description">団子3種 + 100円ドリンク</p></div>
                 <div class="menu-item"><h4>きな粉</h4><p>¥150</p></div>
                 <div class="menu-item"><h4>みたらし</h4><p>¥150</p></div>
@@ -164,8 +223,11 @@
                 <div class="menu-item"><h4>あんこ増量</h4><p>¥20</p></div>
                 <div class="menu-item"><h4>きな粉増量</h4><p>¥20</p></div>
             </div>
-            <h3 style="margin-top: 40px;">Drink</h3>
+            
+            <img src="dango.jpg" alt="焼かれる団子" class="dango-illustration fade-in"> 
+            
             <div class="menu-grid">
+                <h3 style="margin-top: 40px;">Drink</h3>
                 <div class="menu-item"><h4>緑茶</h4><p>¥100</p></div>
                 <div class="menu-item"><h4>烏龍茶</h4><p>¥100</p></div>
                 <div class="menu-item"><h4>水</h4><p>¥100</p></div>
@@ -183,10 +245,11 @@
                 勉強や部活の合間に、美味しいお団子でほっと一息つきませんか。皆様のお越しをお待ちしております。</p>
         </section>
 
-        <section id="access" class="container section fade-in card"> <h2 class="section-title">アクセス</h2>
+        <section id="location" class="container section fade-in card"> 
+            <h2 class="section-title">出店場所</h2>
             <p>皆様のお越しをお待ちしております！</p>
-            <img src="https://media.discordapp.net/attachments/1181206556193329204/1430416379131072623/image.png?ex=68f9b290&is=68f86110&hm=1939ec9d2a5d8669054a44bfe5f295cc761fb5c7137d2ca4282f36e1805330ba&=&format=webp&quality=lossless&width=527&height=525" 
-                 alt="お店の場所" style="width: 100%; max-width: 527px; display: block; margin: 20px auto; border-radius: 8px;">
+            <img src="basyo.png" 
+                 alt="出店場所" style="width: 100%; max-width: 527px; display: block; margin: 20px auto; border-radius: 8px;">
         </section>
 
         <footer>
@@ -194,47 +257,6 @@
                 <p id="credit-footer">&copy; 2025 おんちゃ処. All rights reserved.</p>
             </div>
         </footer>
-    </div>
-    
-    <div id="page-customer-order" class="page">
-        <section class="hero" style="padding: 30px 0;">
-            <div class="container card"> <h2 class="section-title" style="margin-top: 0;">ご注文</h2>
-                <p>商品を選んで、下の「注文を確定する」ボタンを押してください。</p>
-            </div>
-        </section>
-        
-        <section class="container section card" style="padding-top: 0;"> <h3>Food</h3>
-            <div id="food-menu-grid"></div> 
-            <h3 style="margin-top: 40px;">Drink</h3>
-            <div id="drink-menu-grid"></div>
-        </section>
-
-        <div id="order-summary">
-            <div id="customer-total-price">合計: ¥0</div>
-            <button id="customer-confirm-button">注文を確定する</button>
-            <button id="cancel-customer-order-button">トップページに戻る</button> 
-        </div>
-    </div>
-    
-    <div id="page-staff-confirm" class="page card"> 
-        <h2 class="section-title">ご注文内容の確認</h2>
-        <p>お客様から以下の内容で注文を受け付けました。<br>内容と金額を確認し、代金をお受け取りください。</p>
-        <ul id="confirm-summary" class="order-summary-list"></ul>
-        
-        <div id="staff-confirm-total">合計: ¥0 <span id="staff-tap-area">•</span></div>
-        
-        <button id="checkout-complete-button">会計完了</button>
-        <button id="cancel-order-button">注文に戻る</button>
-    </div>
-
-    <div id="page-customer-receipt" class="page card"> 
-        <h2 class="section-title">ご注文ありがとうございます</h2>
-        <h3 id="ticket-number">整理券番号Aです。</h3>
-        <p>ご注文内容：</p>
-        <ul id="receipt-summary" class="order-summary-list"></ul>
-        <div id="receipt-total">合計: ¥0</div>
-        <p>商品をご用意しますので、呼ばれるまでお待ちください。</p>
-        <button id="pickup-button">（商品を受け取りました）</button>
     </div>
     
     
@@ -249,6 +271,7 @@
         </nav>
 
         <div id="page-staff-order" class="staff-page-content active">
+            <h3 id="staff-order-header" style="text-align: center; color: #d9534f; margin-top: 0; font-family: 'Noto Sans JP', sans-serif;"></h3>
             <main id="staff-order-form"></main>
             <footer id="total-section">
                 <div id="staff-total-price">合計: ¥0</div>
@@ -273,7 +296,7 @@
 
     <script>
         // ▼▼▼ ご指定のGASのURL（変更なし） ▼▼▼
-        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxA5sTsfPocp97uQKfgEIX3f96JF024jC4G8DTKyiL5CWPeVBHKrJOuBFcEf2vZowkf/exec'; // ここを最新のURLに
+        const GAS_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyh_xBtC7ZSfYuKJZuoKv8BsTJWpvTqC3vAhjoZ7qYvH3p9r8JFTqCi3092ktNJP3am/exec'; // ここを最新のURLに
         
         // --- 合言葉 ---
         const PASSWORDS = ['おんざはーる', 'オンザハール', 'オントッツォ', 'おんトッツォ'];
@@ -298,36 +321,16 @@
         };
 
         // 注文数を保持するオブジェクト
-        let customerOrder = {};
         let staffOrder = {};
+        
+        // ▼▼▼ [修正] 手動オーダーのカウンターを「次の番号」を保持する変数に変更 ▼▼▼
+        let currentNextTicket = 1; // GASから取得した「次の整理券番号」を保持
+        // ▲▲▲ 修正完了 ▲▲▲
 
         // --- DOM要素の取得 (ページごと) ---
         const customerTopView = document.getElementById('page-customer-top');
         const creditFooter = document.getElementById('credit-footer');
-        const gotoOrderButton = document.getElementById('goto-order-button');
-        const gotoReceiptButton = document.getElementById('goto-receipt-button');
-        // ▼▼▼ [追加] BGM再生用ロゴID ▼▼▼
         const logoImageTrigger = document.getElementById('logo-image-trigger');
-
-        const customerOrderView = document.getElementById('page-customer-order');
-        const foodMenuGrid = document.getElementById('food-menu-grid');
-        const drinkMenuGrid = document.getElementById('drink-menu-grid');
-        const customerTotalPriceEl = document.getElementById('customer-total-price');
-        const customerConfirmButton = document.getElementById('customer-confirm-button');
-        const cancelCustomerOrderButton = document.getElementById('cancel-customer-order-button');
-        
-        const staffConfirmView = document.getElementById('page-staff-confirm');
-        const confirmSummaryEl = document.getElementById('confirm-summary');
-        const staffConfirmTotalEl = document.getElementById('staff-confirm-total');
-        const checkoutCompleteButton = document.getElementById('checkout-complete-button');
-        const staffTapArea = document.getElementById('staff-tap-area');
-        const cancelOrderButton = document.getElementById('cancel-order-button');
-        
-        const customerReceiptView = document.getElementById('page-customer-receipt');
-        const ticketNumberEl = document.getElementById('ticket-number');
-        const receiptSummaryEl = document.getElementById('receipt-summary');
-        const receiptTotalEl = document.getElementById('receipt-total');
-        const pickupButton = document.getElementById('pickup-button');
         
         const staffPanelView = document.getElementById('page-staff-panel');
         const orderTab = document.getElementById('order-tab');
@@ -340,6 +343,10 @@
         const staffConfirmButton = document.getElementById('staff-confirm-button');
         const logContainer = document.getElementById('log-container');
         const backToCustomerButton = document.getElementById('back-to-customer');
+
+        // ▼▼▼ [修正] 手動オーダーヘッダーのDOM ▼▼▼
+        const staffOrderHeaderEl = document.getElementById('staff-order-header');
+        // ▲▲▲ 修正完了 ▲▲▲
 
         // --- ページ切り替え ---
         function showPage(pageId) {
@@ -371,56 +378,14 @@
             return total;
         }
         
-        // ==========================================
-        // --- 顧客注文フロー (2. 顧客注文ページ) ---
-        // ==========================================
-        
-        function initializeCustomerOrderForm() {
-            foodMenuGrid.innerHTML = ''; 
-            drinkMenuGrid.innerHTML = '';
-            customerOrder = {}; 
-
-            for (const id in menuItems) {
-                customerOrder[id] = 0; 
-                const item = menuItems[id];
-                
-                const el = document.createElement('div');
-                el.className = 'menu-item card'; // Added card class
-                el.innerHTML = `
-                    <div class="menu-item-details">
-                        <h4>${item.name}</h4>
-                        ${item.desc ? `<p class="description">${item.desc}</p>` : ''}
-                    </div>
-                    <div class="menu-item-controls">
-                        <p>¥${item.price}</p>
-                        <div class="count-controls">
-                            <button onclick="updateCustomerOrder('${id}', -1)">-</button>
-                            <span id="cust-count-${id}" class="count">0</span>
-                            <button onclick="updateCustomerOrder('${id}', 1)">+</button>
-                        </div>
-                    </div>
-                `;
-                
-                if (item.type === 'food') foodMenuGrid.appendChild(el);
-                else drinkMenuGrid.appendChild(el);
-            }
-            updateCustomerTotal();
-        }
-
-        window.updateCustomerOrder = function(id, change) {
-            const newCount = customerOrder[id] + change;
-            if (newCount >= 0) { 
-                customerOrder[id] = newCount;
-                document.getElementById(`cust-count-${id}`).innerText = newCount;
-                updateCustomerTotal();
+        // ▼▼▼ [修正] 手動オーダーのヘッダー更新関数 ▼▼▼
+        function updateStaffOrderHeader() {
+            if (staffOrderHeaderEl) {
+                staffOrderHeaderEl.innerText = `これは ${currentNextTicket} 人目のお客さんのオーダーです`;
             }
         }
+        // ▲▲▲ 修正完了 ▲▲▲
         
-        function updateCustomerTotal() {
-            const total = calculateTotal(customerOrder);
-            customerTotalPriceEl.innerText = `合計: ¥${total}`;
-        }
-
         // ==========================================
         // --- 店員手動フロー (5. 店員パネル) ---
         // ==========================================
@@ -447,6 +412,10 @@
                 staffOrderForm.appendChild(el);
             }
             updateStaffTotal();
+            
+            // ▼▼▼ [修正] フォーム初期化時にヘッダーも更新 ▼▼▼
+            updateStaffOrderHeader();
+            // ▲▲▲ 修正完了 ▲▲▲
         }
 
         window.updateStaffOrder = function(id, change) {
@@ -482,6 +451,31 @@
         // --- GAS (スプレッドシート連携) ---
         // ==========================================
 
+        // ▼▼▼ [追加] パネル開封時に「次の番号」だけを取得する関数 ▼▼▼
+        async function fetchNextTicketAndUpdateHeader() {
+            try {
+                // GETリクエスト（doGet）を呼ぶ
+                const response = await fetch(GAS_WEB_APP_URL);
+                if (!response.ok) throw new Error('Network error fetching next ticket');
+                
+                const result = await response.json();
+                if (result.status !== 'success') throw new Error(result.message);
+                
+                // GASから返された nextTicket をグローバル変数に保存
+                currentNextTicket = result.nextTicket; 
+                // ヘッダー表示を更新
+                updateStaffOrderHeader(); 
+                
+            } catch (error) {
+                console.error('Error fetching next ticket:', error);
+                if (staffOrderHeaderEl) {
+                    staffOrderHeaderEl.innerText = 'オーダー番号の取得に失敗';
+                }
+            }
+        }
+        // ▲▲▲ 追加完了 ▲▲▲
+
+        // ▼▼▼ [修正] loadAndRenderLog でも「次の番号」を更新する ▼▼▼
         async function loadAndRenderLog() {
             logContainer.innerHTML = '<p style="text-align: center; color: #888;">ログを読み込み中です...</p>';
             try {
@@ -490,6 +484,9 @@
                 
                 const result = await response.json();
                 if (result.status !== 'success') throw new Error(result.message);
+                
+                // LOGタブを開いたときも、念のため「次の番号」を同期する
+                currentNextTicket = result.nextTicket; 
                 
                 const logs = result.data;
                 if (logs.length === 0) {
@@ -523,9 +520,10 @@
                 logContainer.innerHTML = `<p style="text-align: center; color: red;">エラー: ${error.message} (GASのURL、デプロイ、シート名「LOG」を確認してください)</p>`;
             }
         }
+        // ▲▲▲ 修正完了 ▲▲▲
         
         // --- (POST) 新規注文をLOG書き込み (action: 'create') ---
-        async function logOrderToGAS(isCustomerOrder, total, order) {
+        async function logOrderToGAS(total, order) {
             let itemsToLog = [];
             for (const id in order) {
                 if (order[id] > 0) {
@@ -536,14 +534,13 @@
             
             const dataToPost = {
                 action: 'create',
-                isCustomerOrder: isCustomerOrder, // true or false
+                isCustomerOrder: false, // 常に false (手動オーダー)
                 itemsSummary: itemsSummary,
                 total: total
             };
 
             try {
-                if (isCustomerOrder) checkoutCompleteButton.disabled = true; // ボタン無効化
-                else staffConfirmButton.disabled = true;
+                staffConfirmButton.disabled = true; // ボタン無効化
 
                 const response = await fetch(GAS_WEB_APP_URL, {
                     method: 'POST',
@@ -562,126 +559,27 @@
                 alert(`ログの書き込みに失敗しました: ${error.message}`);
                 return null; // 失敗
             } finally {
-                if (isCustomerOrder) checkoutCompleteButton.disabled = false; // ボタン有効化
-                else staffConfirmButton.disabled = false;
+                staffConfirmButton.disabled = false; // ボタン有効化
             }
         }
         
-        // --- (POST) ステータス更新 (action: 'update') ---
-        async function updateOrderStatus(ticketId, timestamp) {
-            const dataToPost = {
-                action: 'update',
-                ticket: ticketId,
-                timestamp: timestamp
-            };
-            
-            try {
-                const response = await fetch(GAS_WEB_APP_URL, {
-                    method: 'POST',
-                    body: JSON.stringify(dataToPost) 
-                });
-                if (!response.ok) throw new Error(`Network error: ${response.statusText}`);
-                
-                await response.json(); // 成功したか確認（中身は使わない）
-
-            } catch (error) {
-                console.error('Error posting log (update):', error);
-                // ここでのエラーは顧客に通知しない
-            }
-        }
-
         // ==========================================
         // --- イベントリスナー設定 ---
         // ==========================================
         
-        // --- 顧客トップページ ---
-        gotoOrderButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            initializeCustomerOrderForm(); 
-            showPage('page-customer-order');
-        });
-        
-        gotoReceiptButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            const ticketId = customerReceiptView.dataset.ticketId;
-            if (ticketId) {
-                showPage('page-customer-receipt');
-            } else {
-                alert('この端末ではまだ注文が行われていません。\n「セルフオーダーはこちら」からご注文ください。');
-            }
-        });
-        
-        // --- 顧客注文ページ ---
-        customerConfirmButton.addEventListener('click', () => {
-            const total = calculateTotal(customerOrder);
-            if (total === 0) {
-                alert('商品が選択されていません。');
-                return;
-            }
-            const summaryHtml = generateOrderSummary(customerOrder);
-            confirmSummaryEl.innerHTML = summaryHtml;
-            // ▼▼▼ staffConfirmTotalEl のテキストノードだけを更新 ▼▼▼
-            staffConfirmTotalEl.firstChild.textContent = `合計: ¥${total} `; 
-            showPage('page-staff-confirm');
-        });
-        cancelCustomerOrderButton.addEventListener('click', () => {
-            showPage('page-customer-top');
-        });
-
-        // --- 店員確認ページ ---
-        cancelOrderButton.addEventListener('click', () => {
-            showPage('page-customer-order');
-        });
-
-        checkoutCompleteButton.addEventListener('click', () => {
-             alert("合計金額の隣の • マークをタップしてください。"); // タップを促すアラート
-        });
-        
-        staffTapArea.addEventListener('click', async () => {
-            
-            const total = calculateTotal(customerOrder);
-            const result = await logOrderToGAS(true, total, customerOrder);
-            
-            if (result && result.status === 'success') {
-                const ticketId = result.ticket; // 数値
-                const timestamp = result.timestamp;
-                
-                ticketNumberEl.innerText = `整理券番号 ${ticketId} です。`; 
-                receiptSummaryEl.innerHTML = generateOrderSummary(customerOrder);
-                receiptTotalEl.innerText = `合計: ¥${total}`;
-                
-                customerReceiptView.dataset.ticketId = ticketId;
-                customerReceiptView.dataset.timestamp = timestamp;
-                
-                showPage('page-customer-receipt');
-                initializeCustomerOrderForm();
-            }
-        });
-        
-        // --- 整理券ページ ---
-        pickupButton.addEventListener('click', () => {
-            const ticketId = customerReceiptView.dataset.ticketId;
-            const timestamp = customerReceiptView.dataset.timestamp;
-            if (ticketId && timestamp) {
-                updateOrderStatus(ticketId, timestamp);
-            }
-            customerReceiptView.dataset.ticketId = "";
-            customerReceiptView.dataset.timestamp = "";
-            
-            showPage('page-customer-top');
-        });
-
-
         // --- 店員パネル (秘密の操作) ---
         let clickCount = 0;
-        creditFooter.addEventListener('click', () => {
+        // ▼▼▼ [修正] パネルを開く前に、次の番号を取得する ▼▼▼
+        creditFooter.addEventListener('click', async () => {
             clickCount++;
-             // ▼▼▼ [修正] 5回 -> 3回 ▼▼▼
             if (clickCount >= 3) { 
                 const userInput = prompt('【合言葉】\nおんちゃの有名なコラ画像は？');
                 clickCount = 0; 
                 
                 if (PASSWORDS.includes(userInput)) {
+                    // パネルを開く前に、GASから最新の「次の番号」を取得
+                    await fetchNextTicketAndUpdateHeader(); 
+                    
                     initializeStaffOrderForm(); 
                     showPage('page-staff-panel');
                     staffOrderPage.classList.add('active');
@@ -692,14 +590,14 @@
                     alert('お前さんは誰や');
                 }
             }
-            // ▼▼▼ [修正] 3秒 -> 2秒 ▼▼▼
             setTimeout(() => { clickCount = 0; }, 2000); 
         });
+        // ▲▲▲ 修正完了 ▲▲▲
         
         // --- 店員パネル (手動オーダー) ---
         staffResetButton.addEventListener('click', () => {
             if (confirm('現在のオーダーをリセットしますか？')) {
-                initializeStaffOrderForm();
+                initializeStaffOrderForm(); // フォームはリセットされるが、カウンターは維持される
             }
         });
         
@@ -713,11 +611,15 @@
                 return;
             }
             
-            const result = await logOrderToGAS(false, total, staffOrder);
+            const result = await logOrderToGAS(total, staffOrder);
             
             if (result && result.status === 'success') {
                 alert('ログに記録しました。');
-                initializeStaffOrderForm(); // フォームリセット
+                
+                // ▼▼▼ [修正] 確定したらカウンターを+1し、フォームを初期化(ヘッダーも更新) ▼▼▼
+                currentNextTicket++; // ブラウザ側の番号を+1
+                initializeStaffOrderForm(); 
+                // ▲▲▲ 修正完了 ▲▲▲
             }
         });
         
@@ -728,13 +630,12 @@
 
         // --- BGM再生 & アニメーション ---
         document.addEventListener('DOMContentLoaded', () => {
-            // ▼▼▼ [修正] BGM再生トリガーをロゴ画像に変更 ▼▼▼
             const logoTrigger = document.getElementById('logo-image-trigger');
-            if (logoTrigger) { // 要素が存在するか確認
+            if (logoTrigger) { 
                 logoTrigger.addEventListener('click', () => {
                     const bgm = document.getElementById('bgm');
                     if (bgm && bgm.paused) { 
-                        bgm.play().catch(e => console.error("BGM Playback failed:", e)); 
+                        bgm.play().catch(e => console.error("BGMの再生に失敗しました:", e)); 
                     }
                 }, { once: true }); 
             } else {
@@ -746,14 +647,73 @@
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target); // 一度表示したら監視をやめる
+                        observer.unobserve(entry.target); 
                     }
                 });
-            }, { threshold: 0.1 }); // 10%見えたら表示開始
+            }, { threshold: 0.1 }); 
 
             document.querySelectorAll('.fade-in').forEach(el => {
                 observer.observe(el);
             });
+
+            // --- 画像フォールバック処理 (png→jpg の順で存在するファイルを選ぶ) ---
+            function tryLoadImage(src) {
+                return new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.onload = () => resolve(src);
+                    img.onerror = () => reject(src);
+                    img.src = src;
+                });
+            }
+            async function firstAvailable(sources) {
+                for (const s of sources) {
+                    try { await tryLoadImage(s); return s; } catch (e) { /* 続行 */ }
+                }
+                return null;
+            }
+
+            (async () => {
+                // hero 背景: haikei.jpg -> image3.png -> image3.jpg
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    const heroSrc = await firstAvailable(['haikei.jpg', 'image3.png','image3.jpg']);
+                    if (heroSrc) {
+                        hero.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${heroSrc}')`;
+                        hero.style.backgroundSize = 'cover';
+                    } else {
+                        console.warn('hero background: 画像が見つかりません (haikei/image3)');
+                    }
+                }
+
+                // menu-static 背景: gakkou.jpg -> image1.png -> image1.jpg
+                const menuStatic = document.getElementById('menu-static');
+                if (menuStatic) {
+                    const menuSrc = await firstAvailable(['gakkou.jpg', 'image1.png','image1.jpg']);
+                    if (menuSrc) {
+                        // JSで背景画像のみ設定（CSS側でオーバーレイを制御）
+                        menuStatic.style.backgroundImage = `url('${menuSrc}')`;
+                    } else {
+                        console.warn('menu-static background: gakkou.jpg/image1.png/jpg が見つかりません');
+                    }
+                }
+
+                // dango イラスト: dango.jpg -> image2.png -> image2.jpg
+                const dango = document.querySelector('.dango-illustration');
+                if (dango) {
+                    const dangoSrc = await firstAvailable(['dango.jpg', 'image2.png','image2.jpg']);
+                    if (dangoSrc) dango.src = dangoSrc;
+                    else console.warn('dango illustration: dango.jpg/image2.png/jpg が見つかりません');
+                }
+
+                // 出店場所の画像: basyo.png -> basyo.jpg
+                const locationImg = document.querySelector('#location img');
+                if (locationImg) {
+                    const locSrc = await firstAvailable(['basyo.png', 'basyo.jpg']);
+                    if (locSrc) locationImg.src = locSrc;
+                    else console.warn('location image: basyo.png/jpg が見つかりません');
+                }
+            })();
+
         });
 
         // --- 初期化実行 ---
